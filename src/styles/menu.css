@@ -1,0 +1,59 @@
+/* Inline menu bar (lives inside the titlebar) + dropdown. */
+
+#menu-bar {
+  display: flex;
+  align-items: stretch;
+  padding: 0 4px;
+}
+
+.menu-trigger {
+  background: transparent;
+  border: 0;
+  color: var(--fm-text);
+  padding: 0 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.menu-trigger:hover,
+.menu-trigger[data-open="true"] {
+  background: var(--fm-rule);
+}
+
+.menu-dropdown {
+  position: fixed;
+  z-index: 100;
+  background: var(--fm-bg);
+  border: 1px solid var(--fm-rule-strong);
+  box-shadow: 0 8px 24px rgba(48, 52, 63, 0.12);
+  border-radius: 6px;
+  padding: 4px;
+  min-width: 220px;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: var(--fm-text);
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.menu-item:hover { background: var(--fm-rule); }
+
+.menu-item-shortcut {
+  color: var(--fm-muted);
+  font-size: 11px;
+}
+
+.menu-separator {
+  height: 1px;
+  background: var(--fm-rule);
+  margin: 4px 0;
+}

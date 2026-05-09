@@ -1,0 +1,19 @@
+/* @krill-software/desktop-ui — entry CSS bundle.
+ *
+ * Import this once from your app's main.ts:
+ *
+ *   import "@krill-software/desktop-ui/styles";
+ *
+ * Or cherry-pick if you need only some pieces:
+ *
+ *   import "@krill-software/desktop-ui/styles/palette.css";
+ *   import "@krill-software/desktop-ui/styles/titlebar.css";
+ */
+
+@import "./palette.css";
+@import "./reset.css";
+@import "./kbd.css";
+@import "./titlebar.css";
+@import "./menu.css";
+@import "./status-line.css";
+@import "./scrollbar.css";

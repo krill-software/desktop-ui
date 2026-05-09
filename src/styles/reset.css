@@ -1,0 +1,16 @@
+/* Krill app base reset. Applies once per window. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--fm-bg);
+  color: var(--fm-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  user-select: none;
+  overflow: hidden;
+}
+
+button { font-family: inherit; }

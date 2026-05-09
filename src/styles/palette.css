@@ -1,0 +1,14 @@
+/* The locked krill palette. Five named colors + Space-Cadet alpha
+ * derivations for rules and shadows. No other colors anywhere in
+ * krill app surfaces — see krill-software/.github/STYLE.md. */
+
+:root {
+  --fm-bg:           #FAFAFF;            /* Ghost White — background */
+  --fm-text:         #30343F;            /* Space Cadet — body text, primary ink */
+  --fm-muted:        #878472;            /* Artichoke — muted text, secondary labels */
+  --fm-accent:       #DD7596;            /* Shimmering Blush — accent (cursor, selection, dirty marker) */
+  --fm-accent-strong:#FF82BF;            /* Brilliant Rose — strong accent (hover, primary CTAs) */
+
+  --fm-rule:         rgba(48, 52, 63, 0.08);   /* alpha-Space-Cadet for fine rules + subtle hovers */
+  --fm-rule-strong:  rgba(48, 52, 63, 0.16);   /* alpha-Space-Cadet for stronger rules + selected states */
+}

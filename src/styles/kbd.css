@@ -1,0 +1,12 @@
+/* <kbd> — palette-correct keyboard chip used in empty states / hints. */
+
+kbd {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 11px;
+  background: var(--fm-bg);
+  border: 1px solid var(--fm-rule-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--fm-text);
+}

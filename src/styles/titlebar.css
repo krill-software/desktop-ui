@@ -1,0 +1,56 @@
+/* Krill custom titlebar — 32px chrome at the top of every window.
+ *
+ *   [menu]  [drag region — centered title]  [min] [max] [close]
+ *
+ * The titlebar background matches the body (Ghost White); a 1px rule
+ * separates it visually. Hidden when body[data-fullscreen="true"]. */
+
+#titlebar {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  background: var(--fm-bg);
+  border-bottom: 1px solid var(--fm-rule);
+}
+
+body[data-fullscreen="true"] #titlebar { display: none; }
+
+#titlebar-drag {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+#titlebar-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--fm-text);
+  pointer-events: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 24px);
+}
+
+#titlebar-controls { display: flex; }
+
+#titlebar-controls button {
+  width: 36px;
+  background: transparent;
+  border: 0;
+  color: var(--fm-muted);
+  cursor: pointer;
+}
+
+#titlebar-controls button:hover {
+  color: var(--fm-text);
+  background: var(--fm-rule);
+}
+
+#titlebar-close:hover {
+  background: var(--fm-accent);
+  color: var(--fm-bg);
+}

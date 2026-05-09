@@ -1,0 +1,25 @@
+/* Optional 24px status line at the bottom of the window.
+ * Apps can fill it with monospace position / count / mode strings.
+ * Hidden when body[data-fullscreen="true"]. */
+
+#status-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 12px;
+  background: var(--fm-bg);
+  border-top: 1px solid var(--fm-rule);
+  color: var(--fm-muted);
+  font-size: 11px;
+  height: 24px;
+}
+
+body[data-fullscreen="true"] #status-line { display: none; }
+
+#status-line .right {
+  margin-left: auto;
+}
+
+#status-line :is(.mono, [data-mono]) {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+}
