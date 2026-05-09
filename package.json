@@ -19,8 +19,7 @@
     "./styles/*": "./src/styles/*.css"
   },
   "scripts": {
-    "build": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@tauri-apps/api": "^2.1.1",
