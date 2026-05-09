@@ -47,14 +47,28 @@ export interface MenuDef {
 // ---- mountChrome options + return -------------------------------------
 
 export interface ChromeRefs {
-  /** The bottom-of-window status line, if `showStatusLine` was true. */
-  statusLine: HTMLElement | null;
-  /** Centered title span inside the titlebar — apps may override its textContent on file load. */
+  /** Centered title span inside the titlebar — apps set its textContent to
+   *  the active filename (or leave it as the productName when no file is
+   *  open). The dirty bullet is added automatically via a CSS pseudo-element
+   *  driven by `body[data-dirty="true"]`. */
   title: HTMLElement;
   /** The menu-bar container inside the titlebar. Most apps don't touch this directly. */
   menuBar: HTMLElement;
-  /** Container element where the app should mount its working view. */
+  /** MAIN pane — primary work view (canvas, page reader, editor, color
+   *  wheel). On the right when an aux pane is also shown. */
   viewport: HTMLElement;
+  /** AUX pane — left-side support surface (tools, settings, navigation,
+   *  output panels). Null if `showAuxPane` was false. Width is fixed at
+   *  260px in v0.3; resizable splitter is a future feature. */
+  aux: HTMLElement | null;
+  /** The bottom status line container, if `showStatusLine` was true. */
+  statusLine: HTMLElement | null;
+  /** LEFT half of the status line. Holds *file identity* — type, size,
+   *  structural dimensions. Doesn't change as the user scrolls or types. */
+  statusInfo: HTMLElement | null;
+  /** RIGHT half of the status line. Holds *position / state* — page X/Y,
+   *  word count, zoom percentage, current mode. Changes constantly. */
+  statusState: HTMLElement | null;
 }
 
 export interface MountChromeOptions {
@@ -74,6 +88,11 @@ export interface MountChromeOptions {
   bindings?: Record<string, ActionCallback>;
   /** Render a 24px status line at the bottom of the window. */
   showStatusLine?: boolean;
+  /** Render a left-side AUX pane (260px wide). Used for tools, navigation,
+   *  settings panels — the support surface beside the main work view.
+   *  Apps that don't need an aux pane (image-viewer, markdown-editor)
+   *  leave this false. */
+  showAuxPane?: boolean;
   /** Where to mount the chrome. Defaults to `document.body`. */
   parent?: HTMLElement;
 }

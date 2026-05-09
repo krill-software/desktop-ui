@@ -1,11 +1,20 @@
-/* Optional 24px status line at the bottom of the window.
- * Apps can fill it with monospace position / count / mode strings.
+/* 24px status line at the bottom of the window — split into two halves:
+ *
+ *   ┌─────────────────────────────────────────────────────────────┐
+ *   │ #status-info                            #status-state       │
+ *   │ (file identity: type · size · …)        (position · mode)   │
+ *   └─────────────────────────────────────────────────────────────┘
+ *
+ * LEFT carries identity/structure metadata that doesn't change as the
+ * user works (file type, size, image dimensions, page count).
+ * RIGHT carries position / state — page X/Y, word count, zoom %, mode.
+ *
  * Hidden when body[data-fullscreen="true"]. */
 
 #status-line {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 16px;
   padding: 4px 12px;
   background: var(--fm-bg);
   border-top: 1px solid var(--fm-rule);
@@ -14,12 +23,31 @@
   height: 24px;
 }
 
-body[data-fullscreen="true"] #status-line { display: none; }
-
-#status-line .right {
-  margin-left: auto;
+#status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+#status-state {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: end;
+}
+
+/* Monospace utility — applied to numeric fields so they don't jitter. */
 #status-line :is(.mono, [data-mono]) {
   font-family: ui-monospace, "JetBrains Mono", monospace;
+}
+
+/* Small dot separator between info chips, used inline. */
+#status-line .sep::before {
+  content: "·";
+  color: var(--fm-rule-strong);
+  margin-right: 8px;
 }

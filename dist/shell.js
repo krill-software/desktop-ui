@@ -16,14 +16,34 @@ export function mountChrome(opts) {
     parent.replaceChildren();
     const { titlebar, title, menuBar } = buildTitlebar();
     parent.appendChild(titlebar);
+    // Optional AUX pane on the LEFT (tools / nav / settings / output panels).
+    // The body grid switches templates based on body[data-aux] — see palette.css.
+    let aux = null;
+    if (opts.showAuxPane) {
+        aux = document.createElement("aside");
+        aux.id = "aux";
+        parent.appendChild(aux);
+        document.body.dataset.aux = "visible";
+    }
+    else {
+        delete document.body.dataset.aux;
+    }
     const viewport = document.createElement("main");
     viewport.id = "viewport";
     parent.appendChild(viewport);
     let statusLine = null;
+    let statusInfo = null;
+    let statusState = null;
     if (opts.showStatusLine) {
         statusLine = document.createElement("footer");
         statusLine.id = "status-line";
         statusLine.setAttribute("aria-live", "polite");
+        statusInfo = document.createElement("div");
+        statusInfo.id = "status-info";
+        statusLine.appendChild(statusInfo);
+        statusState = document.createElement("div");
+        statusState.id = "status-state";
+        statusLine.appendChild(statusState);
         parent.appendChild(statusLine);
     }
     title.textContent = opts.productName;
@@ -33,7 +53,7 @@ export function mountChrome(opts) {
     if (menus.length > 0)
         installMenuBar(menuBar, menus);
     installShortcutHandler(actions, opts.customMenu ?? [], opts.bindings ?? {});
-    return { title, menuBar, statusLine, viewport };
+    return { title, menuBar, viewport, aux, statusLine, statusInfo, statusState };
 }
 /** Auto-include `close-window` and `quit` with their package defaults if
  *  the app didn't provide callbacks. Every krill app gets them. */

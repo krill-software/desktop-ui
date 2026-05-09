@@ -13,7 +13,7 @@
   border-bottom: 1px solid var(--fm-rule);
 }
 
-body[data-fullscreen="true"] #titlebar { display: none; }
+/* Fullscreen visibility lives in layout.css with the rest of body chrome. */
 
 #titlebar-drag {
   flex: 1;

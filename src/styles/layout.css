@@ -1,0 +1,65 @@
+/* Krill body layout — opinionated single-shape across all apps.
+ *
+ *   ┌───────────────────────────────────────────────┐
+ *   │ titlebar                                       │
+ *   ├──────────────┬─────────────────────────────────┤
+ *   │              │                                 │
+ *   │   AUX        │    MAIN                         │
+ *   │   (left,     │    (right, primary work)        │
+ *   │   tools/nav) │                                 │
+ *   │              │                                 │
+ *   ├──────────────┴─────────────────────────────────┤
+ *   │ status line                                    │
+ *   └────────────────────────────────────────────────┘
+ *
+ * Apps without an aux pane (image-viewer, markdown-editor) collapse to a
+ * single-column body. Fullscreen hides everything except main.
+ *
+ * AUX width is fixed at 260px in v0.3 — resizable splitter is a future
+ * feature. */
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title"
+    "main"
+    "status";
+}
+
+body[data-aux="visible"] {
+  grid-template-columns: 260px 1fr;
+  grid-template-areas:
+    "title  title"
+    "aux    main"
+    "status status";
+}
+
+body:not([data-aux="visible"]) #aux { display: none; }
+
+#titlebar    { grid-area: title; }
+#aux         { grid-area: aux;
+               background: var(--fm-bg);
+               border-right: 1px solid var(--fm-rule);
+               overflow: auto;
+               min-height: 0; }
+#viewport    { grid-area: main; min-height: 0; }
+#status-line { grid-area: status; }
+
+/* Fullscreen — package-owned: hide every chrome surface. */
+body[data-fullscreen="true"] {
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+  grid-template-rows: 1fr;
+}
+body[data-fullscreen="true"] #titlebar,
+body[data-fullscreen="true"] #aux,
+body[data-fullscreen="true"] #status-line { display: none; }
+
+/* Dirty marker — accent bullet prefix on the centered filename when the
+ * app has marked the document modified via body[data-dirty="true"]. */
+body[data-dirty="true"] #titlebar-title::before {
+  content: "•\00a0";
+  color: var(--fm-accent);
+}
