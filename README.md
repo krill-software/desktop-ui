@@ -1,58 +1,103 @@
 # @krill-software/desktop-ui
 
-Shared UI primitives for [krill-software](https://github.com/krill-software) desktop apps. Locked palette, custom titlebar, menu bar, status line.
+Shared UI primitives for [krill-software](https://github.com/krill-software) desktop apps. Locked palette, custom titlebar, canonical action registry (menus + shortcuts), status line.
 
 ## What's in here
 
-- **CSS bundle** — palette variables (5 named colors + Space-Cadet alpha rules), base reset, titlebar, menu bar, optional status line, `kbd` styling, opt-in scrollbars. Strict per [STYLE.md](https://github.com/krill-software/.github/blob/main/STYLE.md).
-- **`mountChrome()`** — one call that builds the titlebar DOM, wires the window controls, mounts the menu bar, and (optionally) adds a status line. Returns refs the app uses to populate dynamic content.
-- **`installMenuBar()`** — used by `mountChrome` internally; also exported for apps that need a menu bar somewhere other than the titlebar.
+- **CSS bundle** — palette variables (5 named colors + Space-Cadet alpha rules), base reset, titlebar, menu bar, optional status line, `kbd` styling, opt-in scrollbars.
+- **`mountChrome()`** — one call that builds the titlebar DOM, wires window controls, generates the menu bar from the canonical action registry, wires keyboard shortcuts, and (optionally) adds a status line. Returns refs the app uses to populate dynamic content.
+- **`ACTION_REGISTRY`** — single source of truth for the label, shortcut, and menu group of every krill-canonical action (Save = Ctrl+S, Open = Ctrl+O, Fullscreen = F, etc.). Apps register *callbacks*; everything else is owned by the package.
 
 ## Install
 
 ```sh
-pnpm add github:krill-software/desktop-ui#v0.1.0
-pnpm add @tauri-apps/api  # peer dep, you almost certainly already have it
+pnpm add github:krill-software/desktop-ui#v0.2.0
+pnpm add @tauri-apps/api  # peer dep
 ```
 
-Pin a tag (`#v0.1.0`) — `@main` works but won't be reproducible.
+## Use — the canonical action API
 
-## Use
+Every shortcut + menu structure across krill apps is centralized. An app declares which actions it implements; the package handles everything else.
 
 ```ts
 // main.ts
 import "@krill-software/desktop-ui/styles";
-import { mountChrome, type MenuDef } from "@krill-software/desktop-ui";
-
-const menus: MenuDef[] = [
-  { label: "File", items: [
-    { label: "Open…", shortcut: "Ctrl+O", action: () => void openDialog() },
-  ]},
-];
+import { mountChrome } from "@krill-software/desktop-ui";
 
 const chrome = mountChrome({
   productName: "Document Viewer",
-  menus,
+
+  // Canonical actions — package owns the label, shortcut, and menu group;
+  // app provides the callback. `close-window` and `quit` are auto-included.
+  actions: {
+    "open":           openViaDialog,
+    "fullscreen":     toggleFullscreen,
+    "toggle-sidebar": toggleSidebar,
+    "previous":       () => goToPage(state.pageNumber - 1),
+    "next":           () => goToPage(state.pageNumber + 1),
+    "first":          () => goToPage(1),
+    "last":           () => goToPage(state.totalPages),
+  },
+
+  // App-specific items appended to canonical menu groups.
+  customMenu: [
+    { group: "view", items: [{ label: "Reset zoom history", action: resetZoomHistory }] },
+  ],
+
+  // Arbitrary keyboard shortcuts that don't surface in any menu.
+  bindings: {
+    "PageUp":   () => goToPage(state.pageNumber - 1),
+    "PageDown": () => goToPage(state.pageNumber + 1),
+  },
+
   showStatusLine: true,
 });
 
-// Update the title when a file loads:
 chrome.title.textContent = "paper.pdf — Document Viewer";
-
-// Render your working view into the provided viewport:
 chrome.viewport.appendChild(myCanvas);
-
-// Append status indicators if you asked for a status line:
 chrome.statusLine?.appendChild(myPositionEl);
 ```
 
-`mountChrome` clears the parent (default `document.body`) before mounting, so the app's `index.html` body can be empty:
+The app's `index.html` is a one-script-tag stub:
 
 ```html
 <body>
   <script type="module" src="/src/main.ts"></script>
 </body>
 ```
+
+## The action set
+
+| ID | Label | Shortcut | Group |
+|---|---|---|---|
+| `new` | New | `Ctrl+N` | File |
+| `open` | Open… | `Ctrl+O` | File |
+| `save` | Save | `Ctrl+S` | File |
+| `save-as` | Save As… | `Ctrl+Shift+S` | File |
+| `close-window` | Close window | `Ctrl+W` | File |
+| `quit` | Quit | `Ctrl+Q` | File |
+| `undo` | Undo | `Ctrl+Z` | Edit |
+| `redo` | Redo | `Ctrl+Shift+Z` | Edit |
+| `cut` | Cut | `Ctrl+X` | Edit |
+| `copy` | Copy | `Ctrl+C` | Edit |
+| `paste` | Paste | `Ctrl+V` | Edit |
+| `select-all` | Select all | `Ctrl+A` | Edit |
+| `zoom-in` | Zoom in | `Ctrl+=` | View |
+| `zoom-out` | Zoom out | `Ctrl+-` | View |
+| `zoom-fit` | Fit to window | `Ctrl+0` | View |
+| `zoom-actual` | Original size | `Ctrl+1` | View |
+| `fullscreen` | Fullscreen | `F` | View |
+| `toggle-sidebar` | Toggle sidebar | `Ctrl+\` | View |
+| `previous` | Previous | `←` | Go |
+| `next` | Next | `→` | Go |
+| `first` | First | `Home` | Go |
+| `last` | Last | `End` | Go |
+
+If your app needs a sixth keyboard convention (a brand-new shortcut/label combination not in the registry), it's a real decision — propose extending the registry rather than working around with `bindings`. Adding here changes the contract every krill app shares.
+
+### Edit actions defer to text fields
+
+`undo`, `redo`, `cut`, `copy`, `paste`, `select-all` only fire if focus is *not* in a `<textarea>` / `<input>` / contenteditable. Inside a text field, the browser handles them natively. This means CodeMirror inside markdown-editor still gets its own undo, and our package never shadows it.
 
 ## CSS imports
 
@@ -73,17 +118,17 @@ import "@krill-software/desktop-ui/styles/kbd.css";
 import "@krill-software/desktop-ui/styles/scrollbar.css";  // adds .fm-scroll
 ```
 
-## Conventions assumed by the package
-
-- The app sets `<body data-fullscreen="true">` to enter chrome-free fullscreen — both `#titlebar` and `#status-line` hide on that selector.
-- The app may also use `<body data-state="...">` for application-specific UI states (e.g., `empty` / `document` / `error`); the package doesn't reserve those.
-- The app's working-view CSS lives in its own `styles.css`; only chrome and palette belong here.
-
 ## What's *not* in here
 
-- App-specific layouts (sidebar columns, page rendering, canvas styling). Those vary too much between apps to share.
-- Settings / preferences UI — krill apps don't have settings panels.
-- Any non-palette colors. If you find yourself wanting a sixth color, see [STYLE.md](https://github.com/krill-software/.github/blob/main/STYLE.md) — it's the user's call to extend the palette, not the package's.
+- App-specific layouts (sidebar columns, canvas styling, page rendering). Those vary too much to share.
+- Any non-palette colors. See [krill-software/.github/STYLE.md](https://github.com/krill-software/.github/blob/main/STYLE.md) — extending the palette is the user's decision, not the package's.
+- Settings / preferences UI — krill apps don't have those.
+
+## Versions
+
+- **v0.2.0** — Canonical action registry; menus and shortcuts derive from action IDs. The pre-v0.2 `menus: MenuDef[]` prop is removed (no compat shim — the org is still early).
+- **v0.1.1** — Pre-built `dist/` shipped so consumers don't need to run build scripts on install.
+- **v0.1.0** — Initial. CSS + `mountChrome()` + `installMenuBar`.
 
 ## License
 
