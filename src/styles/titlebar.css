@@ -6,6 +6,7 @@
  * separates it visually. Hidden when body[data-fullscreen="true"]. */
 
 #titlebar {
+  position: relative; /* offset parent for the centered title */
   display: flex;
   align-items: stretch;
   height: 32px;
@@ -18,21 +19,24 @@
 #titlebar-drag {
   flex: 1;
   min-width: 0;
-  position: relative;
 }
 
+/* Filename — centered on the *full* titlebar (not the flex middle slot) so it
+ * sits at the visual center regardless of how wide the menu bar gets.
+ * `pointer-events: none` keeps the menu / drag region clickable through it. */
 #titlebar-title {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1;
   font-size: 12px;
   color: var(--fm-text);
   pointer-events: none;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: calc(100% - 24px);
+  max-width: 50%;
 }
 
 #titlebar-controls { display: flex; }

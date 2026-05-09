@@ -69,7 +69,10 @@ export function mountChrome(opts: MountChromeOptions): ChromeRefs {
     parent.appendChild(statusLine);
   }
 
-  title.textContent = opts.productName;
+  // Titlebar starts empty — the centered title shows the active filename
+  // when one is open, nothing otherwise. Apps set chrome.title.textContent
+  // explicitly on file load and clear it on close.
+  title.textContent = "";
 
   // Effective actions: app-provided + auto-included universals.
   const actions = resolveActions(opts.actions ?? {});

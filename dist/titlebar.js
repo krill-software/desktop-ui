@@ -1,10 +1,12 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+// `#titlebar-title` is a sibling of the drag region, not a child — that way
+// it can be absolute-positioned at the visual center of the *full* titlebar
+// instead of just the middle flex slot.
 const TITLEBAR_HTML = `
 <header id="titlebar">
   <nav id="menu-bar"></nav>
-  <div id="titlebar-drag" data-tauri-drag-region>
-    <span id="titlebar-title"></span>
-  </div>
+  <div id="titlebar-drag" data-tauri-drag-region></div>
+  <span id="titlebar-title"></span>
   <div id="titlebar-controls">
     <button id="titlebar-min" type="button" aria-label="Minimize" title="Minimize">
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">

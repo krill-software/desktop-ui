@@ -1,0 +1,31 @@
+/* Shared "no file open" / "couldn't open this file" placeholders. Centered
+ * vertically AND horizontally in their parent (the working viewport).
+ *
+ * Apps build these via `buildEmptyState()` / `buildErrorState()` from the
+ * package and append them into `chrome.viewport`. Visibility is the app's
+ * responsibility — toggle the `hidden` attribute on the returned element. */
+
+.krill-empty-state,
+.krill-error-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--fm-muted);
+  font-size: 14px;
+  padding: 0 32px;
+  pointer-events: none;
+}
+
+.krill-empty-state .primary,
+.krill-error-state .primary {
+  margin: 4px 0;
+}
+
+.krill-empty-state .hint,
+.krill-error-state .hint {
+  margin: 4px 0;
+  font-size: 12px;
+  color: var(--fm-muted);
+}
