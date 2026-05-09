@@ -1,6 +1,7 @@
 // ---- Menu groups ------------------------------------------------------
 
-export type MenuGroup = "file" | "edit" | "view" | "go" | "help";
+export type MenuGroup =
+  | "file" | "edit" | "image" | "filter" | "view" | "go" | "help";
 
 // ---- Canonical actions ------------------------------------------------
 

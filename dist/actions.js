@@ -32,25 +32,31 @@ export const ACTION_REGISTRY = {
     "first": { label: "First", shortcut: "Home", group: "go" },
     "last": { label: "Last", shortcut: "End", group: "go" },
 };
-/** Canonical layout per group. `"sep"` becomes a menu separator IFF actions
- *  on both sides of it ended up registered (so an empty group never gets
- *  trailing dividers). */
+/** Canonical layout per group.
+ *  - `"sep"` becomes a menu separator IFF visible items exist on both sides.
+ *  - `"custom"` is the slot where customMenu items for this group land.
+ *    When a group has both canonical actions and customs, surrounding
+ *    separators auto-collapse if either side is empty. */
 export const MENU_LAYOUT = {
-    file: ["new", "open", "sep", "save", "save-as", "sep", "close-window", "quit"],
-    edit: ["undo", "redo", "sep", "cut", "copy", "paste", "sep", "select-all"],
-    view: ["zoom-in", "zoom-out", "sep", "zoom-fit", "zoom-actual", "sep", "fullscreen", "toggle-sidebar"],
-    go: ["previous", "next", "sep", "first", "last"],
-    help: [], // entries entirely from customMenu
+    file: ["new", "open", "sep", "save", "save-as", "sep", "custom", "sep", "close-window", "quit"],
+    edit: ["undo", "redo", "sep", "cut", "copy", "paste", "sep", "select-all", "sep", "custom"],
+    image: ["custom"],
+    filter: ["custom"],
+    view: ["zoom-in", "zoom-out", "sep", "zoom-fit", "zoom-actual", "sep", "fullscreen", "toggle-sidebar", "sep", "custom"],
+    go: ["previous", "next", "sep", "first", "last", "sep", "custom"],
+    help: ["custom"],
 };
 export const GROUP_LABEL = {
     file: "File",
     edit: "Edit",
+    image: "Image",
+    filter: "Filter",
     view: "View",
     go: "Go",
     help: "Help",
 };
 /** Order menus appear in the menu bar. */
-export const GROUP_ORDER = ["file", "edit", "view", "go", "help"];
+export const GROUP_ORDER = ["file", "edit", "image", "filter", "view", "go", "help"];
 /** Edit-class actions defer to the browser when focus is in a text field —
  *  binding Ctrl+Z globally would shadow CodeMirror / textarea undo. The
  *  package skips dispatch in that case and the browser's native handling

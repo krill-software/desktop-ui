@@ -1,4 +1,4 @@
-export type MenuGroup = "file" | "edit" | "view" | "go" | "help";
+export type MenuGroup = "file" | "edit" | "image" | "filter" | "view" | "go" | "help";
 /** Every shortcut + label krill apps share lives here. Each app picks
  *  which actions it supports by registering callbacks on `mountChrome`'s
  *  `actions` map; the package owns the label, shortcut, and menu group. */

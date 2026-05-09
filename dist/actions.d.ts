@@ -11,10 +11,12 @@ export interface ActionDef {
  *  canonical action in the krill umbrella. Adding to this is a deliberate act:
  *  it changes the contract that every krill app shares. */
 export declare const ACTION_REGISTRY: Record<ActionId, ActionDef>;
-/** Canonical layout per group. `"sep"` becomes a menu separator IFF actions
- *  on both sides of it ended up registered (so an empty group never gets
- *  trailing dividers). */
-export declare const MENU_LAYOUT: Record<MenuGroup, (ActionId | "sep")[]>;
+/** Canonical layout per group.
+ *  - `"sep"` becomes a menu separator IFF visible items exist on both sides.
+ *  - `"custom"` is the slot where customMenu items for this group land.
+ *    When a group has both canonical actions and customs, surrounding
+ *    separators auto-collapse if either side is empty. */
+export declare const MENU_LAYOUT: Record<MenuGroup, (ActionId | "sep" | "custom")[]>;
 export declare const GROUP_LABEL: Record<MenuGroup, string>;
 /** Order menus appear in the menu bar. */
 export declare const GROUP_ORDER: MenuGroup[];

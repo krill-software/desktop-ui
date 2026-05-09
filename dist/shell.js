@@ -56,34 +56,34 @@ function resolveActions(appActions) {
 function buildMenus(actions, customMenu) {
     const menus = [];
     for (const group of GROUP_ORDER) {
+        const customForGroup = customMenu
+            .filter(c => c.group === group)
+            .flatMap(c => c.items);
         const items = [];
         let pendingSep = false;
-        // Canonical actions in canonical order, separators between sub-groups.
+        const emit = (it) => {
+            if (pendingSep && items.length > 0) {
+                items.push({ sep: true });
+            }
+            pendingSep = false;
+            items.push(it);
+        };
         for (const slot of MENU_LAYOUT[group]) {
             if (slot === "sep") {
                 if (items.length > 0)
                     pendingSep = true;
                 continue;
             }
+            if (slot === "custom") {
+                for (const ci of customForGroup)
+                    emit(ci);
+                continue;
+            }
             const cb = actions[slot];
             if (typeof cb !== "function")
                 continue;
-            if (pendingSep) {
-                items.push({ sep: true });
-                pendingSep = false;
-            }
             const meta = ACTION_REGISTRY[slot];
-            items.push({ label: meta.label, shortcut: meta.shortcut, action: cb });
-        }
-        // App-specific items appended at the end with a separator before them.
-        const customForGroup = customMenu
-            .filter(c => c.group === group)
-            .flatMap(c => c.items);
-        if (customForGroup.length > 0) {
-            if (items.length > 0)
-                items.push({ sep: true });
-            for (const ci of customForGroup)
-                items.push(ci);
+            emit({ label: meta.label, shortcut: meta.shortcut, action: cb });
         }
         if (items.length > 0) {
             menus.push({ label: GROUP_LABEL[group], items });
