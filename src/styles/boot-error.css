@@ -1,0 +1,70 @@
+/* Boot-crash screen — shown when boot() throws. Replaces the body
+ * entirely, so works even when chrome mounting itself failed. Uses
+ * palette tokens with the same fallback hex values so it renders
+ * correctly even if the package's palette.css somehow didn't load. */
+
+.krill-boot-error-host {
+  /* Defensively neutralise any pre-existing body grid the failed
+   * boot may have started to install. */
+  display: block !important;
+  background: var(--fm-bg, #FAFAFF);
+  color: var(--fm-text, #30343F);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.krill-boot-error {
+  position: fixed;
+  inset: 0;
+  background: var(--fm-bg, #FAFAFF);
+  color: var(--fm-text, #30343F);
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  z-index: 100000;
+  overflow: auto;
+}
+
+.krill-boot-error > div {
+  max-width: 640px;
+  width: 100%;
+}
+
+.krill-boot-error .title {
+  margin: 0 0 16px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.krill-boot-error .detail {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: rgba(48, 52, 63, 0.08);
+  border-radius: 6px;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--fm-muted, #878472);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.krill-boot-error .actions {
+  display: flex;
+  justify-content: center;
+}
+
+.krill-boot-error .reload {
+  background: var(--fm-accent, #DD7596);
+  color: var(--fm-bg, #FAFAFF);
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.krill-boot-error .reload:hover {
+  background: var(--fm-accent-strong, #FF82BF);
+}

@@ -18,4 +18,5 @@
 @import "./layout.css";
 @import "./status-line.css";
 @import "./empty-state.css";
+@import "./boot-error.css";
 @import "./scrollbar.css";
