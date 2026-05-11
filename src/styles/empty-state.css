@@ -5,27 +5,31 @@
  * package and append them into `chrome.viewport`. Visibility is the app's
  * responsibility — toggle the `hidden` attribute on the returned element. */
 
-.krill-empty-state,
-.krill-error-state {
+/* `display: grid` would shadow the browser's default [hidden] → display: none,
+ * so we gate the visible style on :not([hidden]) instead of letting the
+ * attribute fight CSS specificity. */
+.krill-empty-state:not([hidden]),
+.krill-error-state:not([hidden]) {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
   text-align: center;
   color: var(--fm-muted);
-  font-size: 14px;
+  font-size: 13px;
   padding: 0 32px;
   pointer-events: none;
 }
 
-.krill-empty-state .primary,
-.krill-error-state .primary {
-  margin: 4px 0;
+.krill-empty-state .message,
+.krill-error-state .message {
+  margin: 0;
+  line-height: 1.6;
 }
 
-.krill-empty-state .hint,
-.krill-error-state .hint {
-  margin: 4px 0;
+.krill-error-state .filename {
+  margin: 6px 0 0;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
   font-size: 12px;
   color: var(--fm-muted);
 }

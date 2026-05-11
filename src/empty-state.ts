@@ -1,71 +1,53 @@
-/** Shared "no file open" placeholder centered in the working view.
- *  Builds the DOM and returns the element; the app appends it to
- *  `chrome.viewport` and toggles its `hidden` attribute as state changes.
+/** Default empty-state message — one terse line that's identical across every
+ *  krill file-app. Apps that want a different copy pass `message` explicitly. */
+const DEFAULT_EMPTY_MESSAGE =
+  'Drop a file or press <kbd>Ctrl</kbd>+<kbd>O</kbd> to open.';
+
+/** Centered "no file open" placeholder used in every krill file-app.
+ *  One line of muted text, vertically + horizontally centered in the viewport.
  *
  *  Usage:
- *    const empty = buildEmptyState({
- *      primary: "No document open.",
- *      hint: 'Drop a PDF here, or press <kbd>Ctrl</kbd>+<kbd>O</kbd>.',
- *    });
+ *    const empty = buildEmptyState();
  *    chrome.viewport.appendChild(empty);
- *    // later:
+ *    // toggle:
  *    empty.hidden = (state.doc !== null);
  *
- *  `hint` accepts inline HTML so callers can include the standard
- *  `<kbd>` markup. Keep it short — one sentence. */
-export function buildEmptyState(opts: { primary: string; hint?: string }): HTMLElement {
+ *  The default message is the canonical krill copy and should rarely be
+ *  overridden — consistency across apps matters more than per-app phrasing. */
+export function buildEmptyState(opts: { message?: string } = {}): HTMLElement {
   const wrap = document.createElement("div");
   wrap.className = "krill-empty-state";
 
-  const inner = document.createElement("div");
-  wrap.appendChild(inner);
-
-  const primary = document.createElement("p");
-  primary.className = "primary";
-  primary.textContent = opts.primary;
-  inner.appendChild(primary);
-
-  if (opts.hint) {
-    const hint = document.createElement("p");
-    hint.className = "hint";
-    hint.innerHTML = opts.hint;
-    inner.appendChild(hint);
-  }
+  const msg = document.createElement("p");
+  msg.className = "message";
+  msg.innerHTML = opts.message ?? DEFAULT_EMPTY_MESSAGE;
+  wrap.appendChild(msg);
 
   return wrap;
 }
 
-/** Shared "couldn't open this file" placeholder. Same shape as the empty
- *  state but with a slot for the failing filename.
- *
- *  Usage:
- *    const error = buildErrorState({ primary: "Can't open this PDF." });
- *    chrome.viewport.appendChild(error.element);
- *    // later:
- *    error.setFilename("broken.pdf");
- *    error.element.hidden = false;
- */
+/** Centered "couldn't open this file" placeholder. Default message is one
+ *  line; the failing filename appears underneath in mono when set. */
+const DEFAULT_ERROR_MESSAGE = "Couldn't open this file.";
+
 export interface ErrorStateRefs {
   element: HTMLElement;
-  /** Set the filename shown in the hint line. Pass empty string to clear. */
+  /** Set the filename shown beneath the error message. Pass empty string to clear. */
   setFilename: (name: string) => void;
 }
 
-export function buildErrorState(opts: { primary: string }): ErrorStateRefs {
+export function buildErrorState(opts: { message?: string } = {}): ErrorStateRefs {
   const wrap = document.createElement("div");
   wrap.className = "krill-error-state";
 
-  const inner = document.createElement("div");
-  wrap.appendChild(inner);
-
-  const primary = document.createElement("p");
-  primary.className = "primary";
-  primary.textContent = opts.primary;
-  inner.appendChild(primary);
+  const msg = document.createElement("p");
+  msg.className = "message";
+  msg.textContent = opts.message ?? DEFAULT_ERROR_MESSAGE;
+  wrap.appendChild(msg);
 
   const filename = document.createElement("p");
-  filename.className = "hint";
-  inner.appendChild(filename);
+  filename.className = "filename";
+  wrap.appendChild(filename);
 
   return {
     element: wrap,

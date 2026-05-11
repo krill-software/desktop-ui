@@ -1,38 +1,23 @@
-/** Shared "no file open" placeholder centered in the working view.
- *  Builds the DOM and returns the element; the app appends it to
- *  `chrome.viewport` and toggles its `hidden` attribute as state changes.
+/** Centered "no file open" placeholder used in every krill file-app.
+ *  One line of muted text, vertically + horizontally centered in the viewport.
  *
  *  Usage:
- *    const empty = buildEmptyState({
- *      primary: "No document open.",
- *      hint: 'Drop a PDF here, or press <kbd>Ctrl</kbd>+<kbd>O</kbd>.',
- *    });
+ *    const empty = buildEmptyState();
  *    chrome.viewport.appendChild(empty);
- *    // later:
+ *    // toggle:
  *    empty.hidden = (state.doc !== null);
  *
- *  `hint` accepts inline HTML so callers can include the standard
- *  `<kbd>` markup. Keep it short — one sentence. */
-export declare function buildEmptyState(opts: {
-    primary: string;
-    hint?: string;
+ *  The default message is the canonical krill copy and should rarely be
+ *  overridden — consistency across apps matters more than per-app phrasing. */
+export declare function buildEmptyState(opts?: {
+    message?: string;
 }): HTMLElement;
-/** Shared "couldn't open this file" placeholder. Same shape as the empty
- *  state but with a slot for the failing filename.
- *
- *  Usage:
- *    const error = buildErrorState({ primary: "Can't open this PDF." });
- *    chrome.viewport.appendChild(error.element);
- *    // later:
- *    error.setFilename("broken.pdf");
- *    error.element.hidden = false;
- */
 export interface ErrorStateRefs {
     element: HTMLElement;
-    /** Set the filename shown in the hint line. Pass empty string to clear. */
+    /** Set the filename shown beneath the error message. Pass empty string to clear. */
     setFilename: (name: string) => void;
 }
-export declare function buildErrorState(opts: {
-    primary: string;
+export declare function buildErrorState(opts?: {
+    message?: string;
 }): ErrorStateRefs;
 //# sourceMappingURL=empty-state.d.ts.map
