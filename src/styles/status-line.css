@@ -20,6 +20,9 @@
   border-top: 1px solid var(--fm-rule);
   color: var(--fm-muted);
   font-size: 11px;
+  /* Pin line-height so the status line stays vertically centered even when
+   * the app has a tall body line-height (markdown-editor sets 1.6 for prose). */
+  line-height: 1;
   height: 24px;
 }
 
