@@ -3,10 +3,13 @@ import type { ActionId, MenuGroup } from "./types.js";
 
 export interface ActionDef {
   label: string;
-  shortcut: string;
+  /** Optional. Actions without a shortcut only appear in menus, never as
+   *  keyboard bindings (e.g. "Check for updates…"). */
+  shortcut?: string;
   group: MenuGroup;
   /** Default callback for actions with a sensible package-level default
-   *  (close-window, quit). Apps may override via the `actions` option. */
+   *  (close-window, quit, check-for-updates). Apps may override via the
+   *  `actions` option. */
   default?: () => void | Promise<void>;
 }
 
@@ -42,6 +45,8 @@ export const ACTION_REGISTRY: Record<ActionId, ActionDef> = {
   "next":         { label: "Next",         shortcut: "ArrowRight", group: "go" },
   "first":        { label: "First",        shortcut: "Home",       group: "go" },
   "last":         { label: "Last",         shortcut: "End",        group: "go" },
+  // Help
+  "check-for-updates": { label: "Check for updates…", group: "help" },
 };
 
 /** Canonical layout per group.
@@ -56,7 +61,7 @@ export const MENU_LAYOUT: Record<MenuGroup, (ActionId | "sep" | "custom")[]> = {
   filter: ["custom"],
   view:   ["zoom-in", "zoom-out", "sep", "zoom-fit", "zoom-actual", "sep", "fullscreen", "toggle-sidebar", "sep", "custom"],
   go:     ["previous", "next", "sep", "first", "last", "sep", "custom"],
-  help:   ["custom"],
+  help:   ["custom", "sep", "check-for-updates"],
 };
 
 export const GROUP_LABEL: Record<MenuGroup, string> = {

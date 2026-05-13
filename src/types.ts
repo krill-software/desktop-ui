@@ -17,7 +17,9 @@ export type ActionId =
   | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual"
   | "fullscreen" | "toggle-sidebar"
   // Go
-  | "previous" | "next" | "first" | "last";
+  | "previous" | "next" | "first" | "last"
+  // Help
+  | "check-for-updates";
 
 export type ActionCallback = () => void | Promise<void>;
 
@@ -95,4 +97,9 @@ export interface MountChromeOptions {
   showAuxPane?: boolean;
   /** Where to mount the chrome. Defaults to `document.body`. */
   parent?: HTMLElement;
+  /** Enable the canonical "Check for updates…" entry in the Help menu.
+   *  Wires to `tauri-plugin-updater` on the Rust side — every krill app
+   *  that ships AppImages should set this true. No boot-time check, no
+   *  status-line indicator: updates are pull-only via the menu. */
+  updater?: boolean;
 }

@@ -2,7 +2,7 @@ export type MenuGroup = "file" | "edit" | "image" | "filter" | "view" | "go" | "
 /** Every shortcut + label krill apps share lives here. Each app picks
  *  which actions it supports by registering callbacks on `mountChrome`'s
  *  `actions` map; the package owns the label, shortcut, and menu group. */
-export type ActionId = "new" | "open" | "save" | "save-as" | "close-window" | "quit" | "undo" | "redo" | "cut" | "copy" | "paste" | "select-all" | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual" | "fullscreen" | "toggle-sidebar" | "previous" | "next" | "first" | "last";
+export type ActionId = "new" | "open" | "save" | "save-as" | "close-window" | "quit" | "undo" | "redo" | "cut" | "copy" | "paste" | "select-all" | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual" | "fullscreen" | "toggle-sidebar" | "previous" | "next" | "first" | "last" | "check-for-updates";
 export type ActionCallback = () => void | Promise<void>;
 /** A single item appended to a canonical menu group. */
 export type CustomMenuItem = {
@@ -75,5 +75,10 @@ export interface MountChromeOptions {
     showAuxPane?: boolean;
     /** Where to mount the chrome. Defaults to `document.body`. */
     parent?: HTMLElement;
+    /** Enable the canonical "Check for updates…" entry in the Help menu.
+     *  Wires to `tauri-plugin-updater` on the Rust side — every krill app
+     *  that ships AppImages should set this true. No boot-time check, no
+     *  status-line indicator: updates are pull-only via the menu. */
+    updater?: boolean;
 }
 //# sourceMappingURL=types.d.ts.map

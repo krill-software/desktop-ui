@@ -8,6 +8,7 @@ import {
   shouldDeferToText,
 } from "./actions.js";
 import { isTextTarget, matchShortcut, parseShortcut, type ParsedShortcut } from "./keybindings.js";
+import { checkForUpdates } from "./updater.js";
 import type {
   ActionCallback,
   ActionId,
@@ -75,7 +76,7 @@ export function mountChrome(opts: MountChromeOptions): ChromeRefs {
   title.textContent = "";
 
   // Effective actions: app-provided + auto-included universals.
-  const actions = resolveActions(opts.actions ?? {});
+  const actions = resolveActions(opts.actions ?? {}, opts);
 
   const menus = buildMenus(actions, opts.customMenu ?? []);
   if (menus.length > 0) installMenuBar(menuBar, menus);
@@ -86,9 +87,12 @@ export function mountChrome(opts: MountChromeOptions): ChromeRefs {
 }
 
 /** Auto-include `close-window` and `quit` with their package defaults if
- *  the app didn't provide callbacks. Every krill app gets them. */
+ *  the app didn't provide callbacks. Every krill app gets them. When
+ *  `opts.updater` is true, also auto-include the "Check for updates…"
+ *  entry wired to the package's updater helper. */
 function resolveActions(
   appActions: Partial<Record<ActionId, ActionCallback | undefined>>,
+  opts: MountChromeOptions,
 ): Partial<Record<ActionId, ActionCallback>> {
   const out: Partial<Record<ActionId, ActionCallback>> = {};
   for (const id of Object.keys(appActions) as ActionId[]) {
@@ -100,6 +104,9 @@ function resolveActions(
       const def = ACTION_REGISTRY[id].default;
       if (def) out[id] = def;
     }
+  }
+  if (opts.updater && typeof out["check-for-updates"] !== "function") {
+    out["check-for-updates"] = () => checkForUpdates(opts.productName);
   }
   return out;
 }
@@ -167,7 +174,7 @@ function installShortcutHandler(
     const cb = actions[id];
     if (typeof cb !== "function") continue;
     const meta = ACTION_REGISTRY[id];
-    if (!meta) continue;
+    if (!meta || !meta.shortcut) continue;
     const parsed = parseShortcut(meta.shortcut);
     list.push({
       parsed,

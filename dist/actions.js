@@ -31,6 +31,8 @@ export const ACTION_REGISTRY = {
     "next": { label: "Next", shortcut: "ArrowRight", group: "go" },
     "first": { label: "First", shortcut: "Home", group: "go" },
     "last": { label: "Last", shortcut: "End", group: "go" },
+    // Help
+    "check-for-updates": { label: "Check for updates…", group: "help" },
 };
 /** Canonical layout per group.
  *  - `"sep"` becomes a menu separator IFF visible items exist on both sides.
@@ -44,7 +46,7 @@ export const MENU_LAYOUT = {
     filter: ["custom"],
     view: ["zoom-in", "zoom-out", "sep", "zoom-fit", "zoom-actual", "sep", "fullscreen", "toggle-sidebar", "sep", "custom"],
     go: ["previous", "next", "sep", "first", "last", "sep", "custom"],
-    help: ["custom"],
+    help: ["custom", "sep", "check-for-updates"],
 };
 export const GROUP_LABEL = {
     file: "File",

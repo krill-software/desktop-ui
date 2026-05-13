@@ -2,6 +2,7 @@ import { buildTitlebar } from "./titlebar.js";
 import { installMenuBar } from "./menu.js";
 import { ACTION_REGISTRY, GROUP_LABEL, GROUP_ORDER, MENU_LAYOUT, shouldDeferToText, } from "./actions.js";
 import { isTextTarget, matchShortcut, parseShortcut } from "./keybindings.js";
+import { checkForUpdates } from "./updater.js";
 /** Build and mount the standard krill app chrome — titlebar, menu bar,
  *  optional status line, viewport. Returns refs the app uses to populate
  *  dynamic content (filename, status indicators) and to render its
@@ -51,7 +52,7 @@ export function mountChrome(opts) {
     // explicitly on file load and clear it on close.
     title.textContent = "";
     // Effective actions: app-provided + auto-included universals.
-    const actions = resolveActions(opts.actions ?? {});
+    const actions = resolveActions(opts.actions ?? {}, opts);
     const menus = buildMenus(actions, opts.customMenu ?? []);
     if (menus.length > 0)
         installMenuBar(menuBar, menus);
@@ -59,8 +60,10 @@ export function mountChrome(opts) {
     return { title, menuBar, viewport, aux, statusLine, statusInfo, statusState };
 }
 /** Auto-include `close-window` and `quit` with their package defaults if
- *  the app didn't provide callbacks. Every krill app gets them. */
-function resolveActions(appActions) {
+ *  the app didn't provide callbacks. Every krill app gets them. When
+ *  `opts.updater` is true, also auto-include the "Check for updates…"
+ *  entry wired to the package's updater helper. */
+function resolveActions(appActions, opts) {
     const out = {};
     for (const id of Object.keys(appActions)) {
         const cb = appActions[id];
@@ -73,6 +76,9 @@ function resolveActions(appActions) {
             if (def)
                 out[id] = def;
         }
+    }
+    if (opts.updater && typeof out["check-for-updates"] !== "function") {
+        out["check-for-updates"] = () => checkForUpdates(opts.productName);
     }
     return out;
 }
@@ -121,7 +127,7 @@ function installShortcutHandler(actions, customMenu, bindings) {
         if (typeof cb !== "function")
             continue;
         const meta = ACTION_REGISTRY[id];
-        if (!meta)
+        if (!meta || !meta.shortcut)
             continue;
         const parsed = parseShortcut(meta.shortcut);
         list.push({

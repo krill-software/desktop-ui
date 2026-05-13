@@ -5,6 +5,7 @@ export { ACTION_REGISTRY } from "./actions.js";
 export { buildEmptyState, buildErrorState } from "./empty-state.js";
 export type { ErrorStateRefs } from "./empty-state.js";
 export { showBootError } from "./boot-error.js";
+export { checkForUpdates } from "./updater.js";
 export type {
   ActionCallback,
   ActionId,

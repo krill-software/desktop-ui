@@ -1,10 +1,13 @@
 import type { ActionId, MenuGroup } from "./types.js";
 export interface ActionDef {
     label: string;
-    shortcut: string;
+    /** Optional. Actions without a shortcut only appear in menus, never as
+     *  keyboard bindings (e.g. "Check for updates…"). */
+    shortcut?: string;
     group: MenuGroup;
     /** Default callback for actions with a sensible package-level default
-     *  (close-window, quit). Apps may override via the `actions` option. */
+     *  (close-window, quit, check-for-updates). Apps may override via the
+     *  `actions` option. */
     default?: () => void | Promise<void>;
 }
 /** Single source of truth for the label, shortcut, and menu group of every
