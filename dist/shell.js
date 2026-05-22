@@ -53,7 +53,10 @@ export function mountChrome(opts) {
     title.textContent = "";
     // Effective actions: app-provided + auto-included universals.
     const actions = resolveActions(opts.actions ?? {}, opts);
-    const menus = buildMenus(actions, opts.customMenu ?? []);
+    const versionLine = opts.version
+        ? `${opts.productName} ${opts.version}`
+        : undefined;
+    const menus = buildMenus(actions, opts.customMenu ?? [], versionLine);
     if (menus.length > 0)
         installMenuBar(menuBar, menus);
     installShortcutHandler(actions, opts.customMenu ?? [], opts.bindings ?? {});
@@ -82,7 +85,7 @@ function resolveActions(appActions, opts) {
     }
     return out;
 }
-function buildMenus(actions, customMenu) {
+function buildMenus(actions, customMenu, versionLine) {
     const menus = [];
     for (const group of GROUP_ORDER) {
         const customForGroup = customMenu
@@ -97,6 +100,13 @@ function buildMenus(actions, customMenu) {
             pendingSep = false;
             items.push(it);
         };
+        // The Help menu opens with a static "<productName> <version>" line.
+        // A separator follows it (pendingSep) so it sits visually apart from
+        // the actions below.
+        if (group === "help" && versionLine) {
+            items.push({ label: versionLine, static: true });
+            pendingSep = true;
+        }
         for (const slot of MENU_LAYOUT[group]) {
             if (slot === "sep") {
                 if (items.length > 0)

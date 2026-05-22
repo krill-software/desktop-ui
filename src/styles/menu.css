@@ -57,3 +57,14 @@
   background: var(--fm-rule);
   margin: 4px 0;
 }
+
+/* Non-interactive line — the Help-menu "<App> <version>" label.
+ * Muted, no hover, not a button. */
+.menu-item-static {
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--fm-muted);
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}

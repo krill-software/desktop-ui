@@ -69,6 +69,13 @@ function renderDropdown(menu: MenuDef, onClose: () => void): HTMLElement {
       drop.appendChild(sep);
       continue;
     }
+    if ("static" in item) {
+      const line = document.createElement("div");
+      line.className = "menu-item-static";
+      line.textContent = item.label;
+      drop.appendChild(line);
+      continue;
+    }
     const row = document.createElement("button");
     row.type = "button";
     row.className = "menu-item";

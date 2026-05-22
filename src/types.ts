@@ -39,7 +39,9 @@ export interface CustomMenuExtension {
 
 export type MenuItem =
   | { label: string; shortcut?: string; action: ActionCallback }
-  | { sep: true };
+  | { sep: true }
+  /** Non-interactive muted line (e.g. the Help-menu version label). */
+  | { label: string; static: true };
 
 export interface MenuDef {
   label: string;
@@ -102,4 +104,8 @@ export interface MountChromeOptions {
    *  that ships AppImages should set this true. No boot-time check, no
    *  status-line indicator: updates are pull-only via the menu. */
   updater?: boolean;
+  /** App version (from package.json). When set, the Help menu opens
+   *  with a static, non-interactive line: `<productName> <version>`.
+   *  Krill's entire "About" surface — no dialog, no credits screen. */
+  version?: string;
 }
