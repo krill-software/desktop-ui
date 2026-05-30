@@ -1,15 +1,17 @@
-/* Krill custom titlebar — 32px chrome at the top of every window.
+/* Krill custom titlebar — 46px chrome at the top of every window.
  *
- *   [menu]  [drag region — centered title]  [min] [max] [close]
+ *   [menu]  [drag region — centered title]  [● ● ●]
  *
- * The titlebar background matches the body (Ghost White); a 1px rule
- * separates it visually. Hidden when body[data-fullscreen="true"]. */
+ * Window controls are traffic-light dots on the right: amber (min),
+ * green (max), red (close). The titlebar background matches the body
+ * (Ghost White); a 1px rule separates it visually. Hidden when
+ * body[data-fullscreen="true"]. */
 
 #titlebar {
   position: relative; /* offset parent for the centered title */
   display: flex;
   align-items: stretch;
-  height: 32px;
+  height: 46px;
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
 }
@@ -30,7 +32,8 @@
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  font-size: 12px;
+  font-size: 13px;
+  letter-spacing: -0.005em;
   color: var(--fm-text);
   pointer-events: none;
   overflow: hidden;
@@ -39,22 +42,32 @@
   max-width: 50%;
 }
 
-#titlebar-controls { display: flex; }
+/* Traffic-light cluster: three 13px dots, 9px apart, with 18px of
+ * right-edge breathing room. Hover dims each dot ~10%; no fill swap,
+ * no system focus ring. */
+#titlebar-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 18px 0 14px;
+}
 
+/* Chained id selectors below (#titlebar-controls #titlebar-X) outrank
+ * this general rule's specificity, so the per-button colors win. */
 #titlebar-controls button {
-  width: 36px;
-  background: transparent;
-  border: 0;
-  color: var(--fm-muted);
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
   cursor: pointer;
+  transition: filter 100ms ease;
 }
-
 #titlebar-controls button:hover {
-  color: var(--fm-text);
-  background: var(--fm-rule);
+  filter: brightness(0.9);
 }
+#titlebar-controls button svg { display: none; }
 
-#titlebar-close:hover {
-  background: var(--fm-accent);
-  color: var(--fm-bg);
-}
+#titlebar-controls #titlebar-min   { background: #e8cfa5; } /* amber */
+#titlebar-controls #titlebar-max   { background: #a5d4b2; } /* green */
+#titlebar-controls #titlebar-close { background: #e8a5a5; } /* red */
