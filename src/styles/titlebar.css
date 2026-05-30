@@ -1,4 +1,4 @@
-/* Krill custom titlebar — 40px chrome at the top of every window.
+/* Krill custom titlebar — 44px chrome at the top of every window.
  *
  *   [File Edit View]  [drag region — centered title]  [—  □  ×]
  *
@@ -15,7 +15,7 @@
   position: relative; /* offset parent for the centered title */
   display: flex;
   align-items: stretch;
-  height: 40px;
+  height: 44px;
   padding: 0 8px; /* symmetric edge gutter; children sit flush to it */
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
@@ -38,8 +38,8 @@
   transform: translate(-50%, -50%);
   z-index: 1;
   font-family: var(--fm-mono);
-  font-size: 13px;
-  letter-spacing: -0.005em;
+  font-size: 12px;
+  letter-spacing: 0;
   color: var(--fm-text);
   pointer-events: none;
   overflow: visible;

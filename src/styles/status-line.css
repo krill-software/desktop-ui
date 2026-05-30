@@ -1,4 +1,4 @@
-/* 28px status line at the bottom of the window — split into two halves:
+/* 32px status line at the bottom of the window — split into two halves:
  *
  *   ┌─────────────────────────────────────────────────────────────┐
  *   │ #status-info                            #status-state       │
@@ -22,11 +22,11 @@
   border-top: 1px solid var(--fm-rule);
   color: var(--fm-muted);
   font-family: var(--fm-mono);
-  font-size: 11px;
+  font-size: 12px;
   /* Pin line-height so the status line stays vertically centered even when
    * the app has a tall body line-height (markdown-editor sets 1.6 for prose). */
   line-height: 1;
-  height: 28px;
+  height: 32px;
 }
 
 #status-info {
