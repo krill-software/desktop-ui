@@ -2,17 +2,24 @@
 
 #menu-bar {
   display: flex;
-  align-items: stretch;
-  padding: 0 4px;
+  align-items: center;
+  gap: 2px;
 }
 
+/* Menu triggers mirror the window-control buttons: 22px-tall rounded
+ * boxes that highlight on hover, vertically centered in the 40px bar. */
 .menu-trigger {
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
   background: transparent;
   border: 0;
+  border-radius: 4px;
   color: var(--fm-text);
-  padding: 0 10px;
+  padding: 0 8px;
   font-size: 12px;
   cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
 }
 .menu-trigger:hover,
 .menu-trigger[data-open="true"] {

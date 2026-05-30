@@ -15,7 +15,9 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  padding: 4px 12px;
+  /* 16px from the window edge to match the titlebar text column:
+   * 8px window gutter + 8px hover-box padding on menu-triggers. */
+  padding: 0 16px;
   background: var(--fm-bg);
   border-top: 1px solid var(--fm-rule);
   color: var(--fm-muted);

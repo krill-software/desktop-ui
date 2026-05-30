@@ -1,17 +1,22 @@
 /* Krill custom titlebar — 40px chrome at the top of every window.
  *
- *   [menu]  [drag region — centered title]  [● ● ●]
+ *   [File Edit View]  [drag region — centered title]  [—  □  ×]
  *
- * Window controls are traffic-light dots on the right: amber (min),
- * green (max), red (close). The titlebar background matches the body
- * (Ghost White); a 1px rule separates it visually. Hidden when
- * body[data-fullscreen="true"]. */
+ * Layout grid: 8px gutter on each side of the bar. Menu triggers
+ * (File / Edit / …) and window controls (min / max / close) render as
+ * 22px-tall rounded boxes that highlight on hover with the rule-alpha
+ * fill. The close button gets a red hover. Glyph text sits 16px from
+ * each window edge (8px gutter + 8px hover-box padding) and aligns
+ * vertically with the status-line text column at the bottom.
+ *
+ * Hidden when body[data-fullscreen="true"]. */
 
 #titlebar {
   position: relative; /* offset parent for the centered title */
   display: flex;
   align-items: stretch;
   height: 40px;
+  padding: 0 8px; /* symmetric edge gutter; children sit flush to it */
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
 }
@@ -42,32 +47,34 @@
   max-width: 50%;
 }
 
-/* Traffic-light cluster: three 13px dots, 9px apart, with 18px of
- * right-edge breathing room. Hover dims each dot ~10%; no fill swap,
- * no system focus ring. */
+/* Icon-button cluster: three transparent square buttons holding minimize /
+ * maximize / close glyphs. Same 9px gap and 18px right-edge padding as the
+ * traffic-light variant so the bar's overall rhythm is unchanged. */
 #titlebar-controls {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 0 18px 0 14px;
 }
 
-/* Chained id selectors below (#titlebar-controls #titlebar-X) outrank
- * this general rule's specificity, so the per-button colors win. */
 #titlebar-controls button {
-  width: 13px;
-  height: 13px;
+  width: 22px;
+  height: 22px;
   padding: 0;
-  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
   border: none;
+  border-radius: 4px;
+  color: var(--fm-muted);
   cursor: pointer;
-  transition: filter 100ms ease;
+  transition: background 100ms ease, color 100ms ease;
 }
 #titlebar-controls button:hover {
-  filter: brightness(0.9);
+  background: var(--fm-rule);
+  color: var(--fm-text);
 }
-#titlebar-controls button svg { display: none; }
-
-#titlebar-controls #titlebar-min   { background: #e8cfa5; } /* amber */
-#titlebar-controls #titlebar-max   { background: #a5d4b2; } /* green */
-#titlebar-controls #titlebar-close { background: #e8a5a5; } /* red */
+#titlebar-controls #titlebar-close:hover {
+  background: #e8a5a5;
+  color: var(--fm-text);
+}
