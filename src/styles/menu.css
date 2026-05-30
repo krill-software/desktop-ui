@@ -17,6 +17,7 @@
   border-radius: 4px;
   color: var(--fm-text);
   padding: 0 8px;
+  font-family: var(--fm-mono);
   font-size: 12px;
   cursor: pointer;
   transition: background 100ms ease, color 100ms ease;

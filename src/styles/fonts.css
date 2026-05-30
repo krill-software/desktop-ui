@@ -1,0 +1,33 @@
+/* Hasklig — the suite's monospace. Bundled so every krill app renders
+ * code, text-editor content, and menu / status-line glyphs identically
+ * across systems. Apps import this via index.css; nothing per-app to
+ * declare. License: see fonts/LICENSE-Hasklig.md. */
+
+@font-face {
+  font-family: "Hasklig";
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Hasklig-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hasklig";
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Hasklig-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hasklig";
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/Hasklig-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hasklig";
+  font-weight: 700;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/Hasklig-BoldItalic.woff2") format("woff2");
+}

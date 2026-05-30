@@ -37,12 +37,12 @@
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  font-family: var(--fm-mono);
   font-size: 13px;
   letter-spacing: -0.005em;
   color: var(--fm-text);
   pointer-events: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
   white-space: nowrap;
   max-width: 50%;
 }

@@ -57,9 +57,17 @@ body[data-fullscreen="true"] #titlebar,
 body[data-fullscreen="true"] #aux,
 body[data-fullscreen="true"] #status-line { display: none; }
 
-/* Dirty marker — accent bullet prefix on the centered filename when the
- * app has marked the document modified via body[data-dirty="true"]. */
-body[data-dirty="true"] #titlebar-title::before {
-  content: "•\00a0";
+/* Dirty marker — accent bullet that hangs to the RIGHT of the centered
+ * filename when the app has marked the document modified via
+ * body[data-dirty="true"]. Absolutely positioned so the title element's
+ * box stays just the filename — that way the centering math (left: 50%;
+ * translate(-50%)) doesn't get nudged off by the marker's width. */
+body[data-dirty="true"] #titlebar-title::after {
+  content: "•";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 6px;
   color: var(--fm-accent);
 }

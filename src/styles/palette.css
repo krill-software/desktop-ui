@@ -16,6 +16,14 @@
 
   --fm-selection:    rgba(221, 117, 150, 0.22); /* alpha-derived from --fm-accent */
 
+  /* Type families. Hasklig is bundled via fonts.css; sans + serif
+   * fall back to system defaults — apps that want a specific sans
+   * (Inter) or serif (Source Serif 4) link them via Google Fonts in
+   * their app HTML and override --fm-sans / --fm-serif locally. */
+  --fm-mono:         "Hasklig", "Source Code Pro", "JetBrains Mono", ui-monospace, monospace;
+  --fm-sans:         ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fm-serif:        ui-serif, Georgia, "Source Serif 4", serif;
+
   /* Color scheme hint to the webview so native form controls + scrollbars
    * track the mode. Set on :root so every descendant inherits. */
   color-scheme: light;

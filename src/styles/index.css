@@ -11,6 +11,7 @@
  */
 
 @import "./palette.css";
+@import "./fonts.css";
 @import "./reset.css";
 @import "./kbd.css";
 @import "./titlebar.css";
