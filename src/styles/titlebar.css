@@ -1,4 +1,4 @@
-/* Krill custom titlebar — 46px chrome at the top of every window.
+/* Krill custom titlebar — 44px chrome at the top of every window.
  *
  *   [menu]  [drag region — centered title]  [● ● ●]
  *
@@ -11,7 +11,7 @@
   position: relative; /* offset parent for the centered title */
   display: flex;
   align-items: stretch;
-  height: 46px;
+  height: 44px;
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
 }
