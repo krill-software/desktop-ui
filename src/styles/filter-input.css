@@ -1,0 +1,33 @@
+/* Shared filter / search input. Same shape across every krill app's
+ * list filter so the search field feels like a single platform
+ * element, not N variants. */
+
+.fm-filter-row {
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.fm-filter-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--fm-rule-strong);
+  border-radius: 6px;
+  background: var(--fm-bg);
+  color: var(--fm-text);
+  font-family: var(--fm-mono);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.fm-filter-input::placeholder { color: var(--fm-muted); }
+
+.fm-filter-input:focus {
+  border-color: var(--fm-accent);
+  box-shadow: 0 0 0 3px rgba(221, 117, 150, 0.18);
+}
+
+/* Hide the WebKit search clear "x" — we already have the visual
+ * vocabulary of typing-to-filter; the extra glyph adds noise. */
+.fm-filter-input::-webkit-search-cancel-button { display: none; }

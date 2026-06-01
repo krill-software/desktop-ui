@@ -1,0 +1,23 @@
+/* Shared loader / spinner. Animation is CSS-driven so any consumer
+ * that adds the `.fm-loader-icon` class to a glyph (whether built by
+ * `buildLoader` / `buildLoaderIcon` or hand-rolled) gets the spin
+ * for free. */
+
+@keyframes fm-spin { to { transform: rotate(360deg); } }
+
+.fm-loader-icon {
+  animation: fm-spin 0.9s linear infinite;
+  flex-shrink: 0;
+}
+
+.fm-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--fm-muted);
+  font-family: var(--fm-mono);
+  font-size: 12px;
+}
+
+.fm-loader-label { color: inherit; }

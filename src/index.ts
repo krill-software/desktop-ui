@@ -6,6 +6,9 @@ export { buildEmptyState, buildErrorState } from "./empty-state.js";
 export type { ErrorStateRefs } from "./empty-state.js";
 export { showBootError } from "./boot-error.js";
 export { checkForUpdates } from "./updater.js";
+export { buildLoader, buildLoaderIcon } from "./loader.js";
+export { buildFilterInput } from "./filter-input.js";
+export type { FilterInputOptions, FilterInputRefs } from "./filter-input.js";
 export type {
   ActionCallback,
   ActionId,

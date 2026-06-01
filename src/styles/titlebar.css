@@ -16,7 +16,7 @@
   display: flex;
   align-items: stretch;
   height: 44px;
-  padding: 0 8px; /* symmetric edge gutter; children sit flush to it */
+  padding: 0 16px; /* symmetric edge gutter; children sit flush to it */
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
 }

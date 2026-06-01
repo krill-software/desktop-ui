@@ -16,11 +16,14 @@
 
   --fm-selection:    rgba(221, 117, 150, 0.22); /* alpha-derived from --fm-accent */
 
-  /* Type families. Hasklig is bundled via fonts.css; sans + serif
-   * fall back to system defaults — apps that want a specific sans
-   * (Inter) or serif (Source Serif 4) link them via Google Fonts in
-   * their app HTML and override --fm-sans / --fm-serif locally. */
-  --fm-mono:         "Hasklig", "Source Code Pro", "JetBrains Mono", ui-monospace, monospace;
+  /* Type families. JetBrains Mono is the suite's default mono and ships
+   * with desktop-ui via fonts.css. Hasklig is also bundled and remains
+   * available as a calmer text-mono — apps that want it for an editor
+   * body reference "Hasklig" directly. Sans + serif fall back to system
+   * defaults; apps that want a specific sans (Inter) or serif
+   * (Source Serif 4) link them via Google Fonts in their app HTML and
+   * override --fm-sans / --fm-serif locally. */
+  --fm-mono:         "JetBrains Mono", "Hasklig", "Source Code Pro", ui-monospace, monospace;
   --fm-sans:         ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --fm-serif:        ui-serif, Georgia, "Source Serif 4", serif;
 

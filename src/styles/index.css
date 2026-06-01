@@ -21,3 +21,5 @@
 @import "./empty-state.css";
 @import "./boot-error.css";
 @import "./scrollbar.css";
+@import "./loader.css";
+@import "./filter-input.css";

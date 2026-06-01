@@ -1,4 +1,4 @@
-/* 32px status line at the bottom of the window — split into two halves:
+/* 34px status line at the bottom of the window — split into two halves:
  *
  *   ┌─────────────────────────────────────────────────────────────┐
  *   │ #status-info                            #status-state       │
@@ -15,9 +15,11 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  /* 16px from the window edge to match the titlebar text column:
-   * 8px window gutter + 8px hover-box padding on menu-triggers. */
-  padding: 0 16px;
+  /* 20px from the window edge to match the docs-mock proportions and
+   * give JetBrains Mono more breathing room. The titlebar's 16px
+   * gutter + 8px hover-box padding = 24px to glyph; status sits 4px
+   * inboard of that on purpose to read as a calmer base. */
+  padding: 0 20px;
   background: var(--fm-bg);
   border-top: 1px solid var(--fm-rule);
   color: var(--fm-muted);
@@ -26,7 +28,7 @@
   /* Pin line-height so the status line stays vertically centered even when
    * the app has a tall body line-height (markdown-editor sets 1.6 for prose). */
   line-height: 1;
-  height: 32px;
+  height: 34px;
 }
 
 #status-info {

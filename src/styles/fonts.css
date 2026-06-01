@@ -1,7 +1,45 @@
-/* Hasklig — the suite's monospace. Bundled so every krill app renders
- * code, text-editor content, and menu / status-line glyphs identically
- * across systems. Apps import this via index.css; nothing per-app to
- * declare. License: see fonts/LICENSE-Hasklig.md. */
+/* Fonts bundled by desktop-ui so every krill app renders chrome and
+ * editor surfaces identically across systems.
+ *
+ * - JetBrains Mono is the suite's mono. It's wider and more visibly
+ *   "code-like" than Hasklig; we use it for chrome (titlebar, menu,
+ *   status line) and as the default --fm-mono.
+ * - Hasklig is kept around as the editor-body monospace for apps that
+ *   want a calmer, more text-like mono in long-form documents
+ *   (text-editor's editor surface). Apps opt in by referencing
+ *   "Hasklig" directly in their local CSS.
+ *
+ * Licenses: fonts/LICENSE-JetBrainsMono.txt, fonts/LICENSE-Hasklig.md.
+ */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/JetBrainsMono-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/JetBrainsMono-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/JetBrainsMono-BoldItalic.woff2") format("woff2");
+}
 
 @font-face {
   font-family: "Hasklig";
