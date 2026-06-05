@@ -4,8 +4,9 @@
  *    1. Check the manifest hosted at the app's release endpoint.
  *    2. If no update → quietly confirm "you're up to date".
  *    3. If update → ask before downloading; download + install + relaunch.
- *    4. On Linux, gracefully explain that auto-updates only work when
- *       running as an AppImage (the .deb is owned by apt).
+ *    4. On Linux, gracefully explain that in-app updates only work for the
+ *       AppImage build — a .deb/.rpm install is owned by the package
+ *       manager and can't swap itself in place.
  *
  *  No boot-time polling, no status-line indicator — this only runs when
  *  the user picks "Help → Check for updates…". Quietness is the brand. */
@@ -19,7 +20,12 @@ export async function checkForUpdates(productName) {
         update = (await updater.check());
     }
     catch (e) {
-        await explainLinuxLimitOrError(dialog, e, productName);
+        if (await explainIfSystemInstall(dialog, e, productName))
+            return;
+        await dialog.message(`Couldn't check for updates: ${String(e)}`, {
+            title: "Update",
+            kind: "error",
+        });
         return;
     }
     if (!update) {
@@ -39,29 +45,44 @@ export async function checkForUpdates(productName) {
         await process.relaunch();
     }
     catch (e) {
+        // A .deb/.rpm install gets this far — the version check succeeds, then the
+        // plugin downloads the AppImage and rejects it as the wrong package format
+        // at install time. Treat that as the system-install case, not a failure.
+        if (await explainIfSystemInstall(dialog, e, productName))
+            return;
         await dialog.message(`Update failed: ${String(e)}`, {
             title: "Update",
             kind: "error",
         });
     }
 }
-/** Distinguish "this app was installed via apt and can't self-update" from
- *  a real error. The updater plugin throws on Linux when not running as
- *  AppImage; surface that as friendly guidance rather than a stack trace. */
-async function explainLinuxLimitOrError(dialog, err, productName) {
+/** If `err` indicates the app is a system-package (.deb/.rpm) install that
+ *  can't self-update, show friendly guidance and return true. Otherwise
+ *  return false so the caller surfaces the real error.
+ *
+ *  Two failure shapes reach us, depending on how the app was installed and
+ *  the Tauri version:
+ *   - some versions throw an AppImage / "not supported" message at check
+ *     time; and
+ *   - a .deb/.rpm install downloads the AppImage and then rejects it as the
+ *     wrong package format at install time — Tauri's `InvalidUpdaterFormat`,
+ *     surfaced as "invalid updater binary format" — because it validates the
+ *     AppImage bytes as a .deb/.rpm.
+ *  Both mean the same thing for the user: upgrade via the package, not
+ *  in-app. */
+async function explainIfSystemInstall(dialog, err, productName) {
     const msg = String(err).toLowerCase();
-    const looksLikeLinuxLimit = msg.includes("appimage") ||
+    const isSystemInstall = msg.includes("appimage") ||
         msg.includes("not supported") ||
-        msg.includes("unsupported");
-    if (looksLikeLinuxLimit) {
-        await dialog.message(`${productName} was installed via your system package manager. ` +
-            `To upgrade, run:\n\n  sudo apt install --only-upgrade <package>\n\n` +
-            `In-app updates are available only when running the AppImage build.`, { title: "Update", kind: "info" });
-        return;
-    }
-    await dialog.message(`Couldn't check for updates: ${String(err)}`, {
-        title: "Update",
-        kind: "error",
-    });
+        msg.includes("unsupported") ||
+        msg.includes("invalid updater binary format") ||
+        msg.includes("invalid updater format");
+    if (!isSystemInstall)
+        return false;
+    await dialog.message(`${productName} was installed from a system package (.deb), so it ` +
+        `can't update itself in place.\n\n` +
+        `To upgrade, install the latest .deb from the releases page, or ` +
+        `switch to the AppImage build — that one updates from inside the app.`, { title: "Update", kind: "info" });
+    return true;
 }
 //# sourceMappingURL=updater.js.map
