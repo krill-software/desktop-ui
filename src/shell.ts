@@ -122,10 +122,15 @@ export function mountChrome(opts: MountChromeOptions): ChromeRefs {
   const versionLine = opts.version
     ? `${opts.productName} ${opts.version}`
     : undefined;
-  const menus = buildMenus(actions, opts.customMenu ?? [], versionLine);
-  if (menus.length > 0) {
-    if (isApp && hamburger) installHamburgerMenu(hamburger, menus);
-    else installMenuBar(menuBar, menus);
+  if (isApp && hamburger) {
+    // App layout: the about-line goes at the TOP of the hamburger popover
+    // (its one version surface — no status line), not inside the Help group.
+    const menus = buildMenus(actions, opts.customMenu ?? []);
+    if (menus.length > 0) installHamburgerMenu(hamburger, menus, versionLine);
+  } else {
+    // Document layout: the about-line opens the Help menu, per STYLE.md.
+    const menus = buildMenus(actions, opts.customMenu ?? [], versionLine);
+    if (menus.length > 0) installMenuBar(menuBar, menus);
   }
 
   installShortcutHandler(actions, opts.customMenu ?? [], opts.bindings ?? {});
