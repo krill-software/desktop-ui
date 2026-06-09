@@ -8,8 +8,13 @@
  *   want a calmer, more text-like mono in long-form documents
  *   (text-editor's editor surface). Apps opt in by referencing
  *   "Hasklig" directly in their local CSS.
+ * - Inter is the suite sans (--text-family-sans), Charter the suite serif
+ *   (--text-family-serif). Bundled here so every app gets them without
+ *   re-declaring @font-face or copying woff2 locally. Inter ships
+ *   400/600/700 (no italic); Charter ships 400/700 + italics.
  *
- * Licenses: fonts/LICENSE-JetBrainsMono.txt, fonts/LICENSE-Hasklig.md.
+ * Licenses: fonts/LICENSE-JetBrainsMono.txt, fonts/LICENSE-Hasklig.md,
+ *           fonts/LICENSE-Inter.txt, fonts/LICENSE-Charter.txt.
  */
 
 @font-face {
@@ -68,4 +73,55 @@
   font-style: italic;
   font-display: block;
   src: url("fonts/Hasklig-BoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Inter-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Inter-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Inter-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Charter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Charter-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Charter";
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+  src: url("fonts/Charter-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Charter";
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/Charter-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Charter";
+  font-weight: 700;
+  font-style: italic;
+  font-display: block;
+  src: url("fonts/Charter-BoldItalic.woff2") format("woff2");
 }

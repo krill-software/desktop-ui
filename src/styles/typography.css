@@ -1,0 +1,68 @@
+/* 
+To Claude:
+This is the place for typography styling.
+Other places defining typography styles should be considered deprecated.
+Defining in any other place should be considered a mistake and should be fixed by replacing that style with a refernce to the best matching style in this file.
+If nothing matches, ask before adding styles here. We should be strict to not let the styles drift.
+*/
+
+:root {
+  /* Font sizes. Each token absorbs a cluster of nearby hardcoded values
+     found across the apps (audit counts in parens). The px is the dominant
+     member of each group — tune later; the point is one name per group so
+     apps can stop hardcoding. */
+  --text-size-xs: 11px; /* 10, 10.5, 11(62), 11.5 — kbd, menu shortcuts, micro labels */
+  --text-size-sm: 12px; /* 12(68), 12.5 — chrome: titlebar, menu, status, filter */
+  --text-size-md: 13px; /* 13(67), 13.5 — body / default */
+  --text-size-lg: 14px; /* 14(12), 15, 15.5 — controls, editor body */
+  --text-size-xl: 16px; /* 16(8), 17 — reading / section body */
+  --text-size-2xl: 18px; /* 18(8) — subheading */
+  --text-size-3xl: 22px; /* 22(3) — heading */
+  --text-size-4xl: 28px; /* 26, 28(3) — large heading */
+  --text-size-5xl: 48px; /* 48(1) — display; one-off (audio-editor), could stay app-local */
+
+  /* Font style tokens — semantic names that map roles onto the scale above. */
+  --text-body: var(--text-size-md); /* 13 — default body text */
+  --text-chrome: var(--text-size-sm); /* 12 — titlebar / menu / status */
+
+  --text-heading-sm: var(--text-size-2xl); /* 18 */
+  --text-heading-md: var(--text-size-3xl); /* 22 */
+  --text-heading-lg: var(--text-size-4xl); /* 28 */
+
+  /* Font families.
+     NOTE: only mono is @font-face'd in desktop-ui today. --text-family-sans
+     (Inter) and --text-family-serif (Charter) fall back to the system font
+     until those faces are bundled — bundling is the follow-up task. */
+  --text-family-sans: "Inter", system-ui, sans-serif;
+  --text-family-serif: "Charter", Georgia, serif;
+  --text-family-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Font weights. Only the faces actually bundled — Inter ships 400/600/700
+     (no 500), and mono/serif ship 400/700. The 8 stray `500` uses in the
+     apps fold into semibold. */
+  --text-weight-regular: 400;
+  --text-weight-semibold: 600; /* sans only — mono/serif have no 600 face */
+  --text-weight-bold: 700;
+
+  /* Line height. Groups the ~40 hardcoded values into four rungs. */
+  --text-leading-none: 1; /* 1(5×) — single-line UI */
+  --text-leading-tight: 1.2; /* 1.05, 1.15, 1.2, 1.25 — headings */
+  --text-leading-normal: 1.45; /* 1.4, 1.45, 1.55 — UI / body */
+  --text-leading-relaxed: 1.6; /* 1.6(7×), 1.7 — prose / reading */
+
+  /* Letter spacing. App-chrome scope only — the wider web-page eyebrow
+     tracking (0.12–0.16em) is governed by WEB-STYLE.md, not this file. */
+  --text-tracking-wide: 0.08em; /* 0.04, 0.06, 0.08(9×) — uppercase labels / eyebrows */
+  --text-tracking-tight: -0.01em; /* -0.005, -0.01, -0.015, -0.02 — large headings */
+
+  /* Legacy style tokens (keep until refactor).
+     Old --fm-* names the apps still reference, re-pointed at the tokens above
+     so nothing breaks before the per-app migration to --text-*. Only the
+     family tokens belong here (--fm-mono 53 refs · --fm-serif 5 · --fm-sans 4);
+     there are no shared --fm-* size tokens — sizes were hardcoded px.
+     --fm-text is intentionally absent: it's the ink COLOR (#30343F) in
+     palette.css, not a font token — aliasing it here breaks text color. */
+  --fm-mono: var(--text-family-mono);
+  --fm-sans: var(--text-family-sans);
+  --fm-serif: var(--text-family-serif);
+}

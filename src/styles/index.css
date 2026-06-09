@@ -10,6 +10,7 @@
  *   import "@krill-software/desktop-ui/styles/titlebar.css";
  */
 
+@import "./typography.css";
 @import "./palette.css";
 @import "./fonts.css";
 @import "./reset.css";
@@ -17,6 +18,7 @@
 @import "./titlebar.css";
 @import "./menu.css";
 @import "./layout.css";
+@import "./topbar.css";
 @import "./status-line.css";
 @import "./empty-state.css";
 @import "./boot-error.css";

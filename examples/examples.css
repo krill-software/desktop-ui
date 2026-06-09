@@ -1,0 +1,126 @@
+/* Example-only styling — the gallery index and the filler content shown
+ * inside each example's viewport. This is NOT part of the shipped chrome;
+ * it just gives the demos something to look at. Uses the palette + type
+ * tokens so even the scaffolding stays on-brand. */
+
+.example-gallery {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  font-family: var(--fm-sans);
+  color: var(--fm-text);
+}
+.example-gallery h1 {
+  font-size: var(--text-heading-md, 22px);
+  font-weight: var(--text-weight-semibold, 600);
+  margin: 0 0 4px;
+}
+.example-gallery p {
+  color: var(--fm-muted);
+  font-size: var(--text-body, 13px);
+  margin: 0 0 28px;
+}
+.example-gallery ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--fm-rule);
+  border: 1px solid var(--fm-rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.example-gallery a {
+  display: block;
+  padding: 16px 18px;
+  background: var(--fm-bg);
+  color: var(--fm-text);
+  text-decoration: none;
+  font-size: var(--text-body, 13px);
+}
+.example-gallery a:hover {
+  background: var(--fm-rule);
+  color: var(--fm-accent-strong);
+}
+.example-gallery a small {
+  display: block;
+  color: var(--fm-muted);
+  font-size: var(--text-size-xs, 11px);
+  margin-top: 2px;
+}
+
+/* Filler shown inside an example viewport. */
+.demo-doc {
+  max-width: 70ch;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+.demo-doc h2 {
+  font-family: var(--fm-serif);
+  font-size: var(--text-heading-md, 22px);
+  font-weight: var(--text-weight-bold, 700);
+  margin: 0 0 12px;
+}
+.demo-doc p {
+  font-family: var(--fm-serif);
+  font-size: var(--text-size-xl, 16px);
+  line-height: var(--text-leading-relaxed, 1.6);
+  color: var(--fm-text);
+  margin: 0 0 16px;
+}
+.demo-doc code {
+  font-family: var(--fm-mono);
+  font-size: var(--text-body, 13px);
+}
+
+/* Component-gallery grid. */
+.demo-grid {
+  display: grid;
+  gap: 24px;
+  padding: 32px;
+}
+.demo-grid section {
+  border: 1px solid var(--fm-rule);
+  border-radius: 10px;
+  padding: 20px;
+}
+.demo-grid h3 {
+  font-family: var(--fm-mono);
+  font-size: var(--text-size-xs, 11px);
+  text-transform: uppercase;
+  letter-spacing: var(--text-tracking-wide, 0.08em);
+  color: var(--fm-muted);
+  margin: 0 0 14px;
+}
+.demo-aux-content {
+  padding: 16px;
+  font-family: var(--fm-sans);
+  font-size: var(--text-body, 13px);
+  color: var(--fm-muted);
+}
+
+/* Desktop-window frame — makes the chrome examples look like a real app
+ * window centered on a desktop, instead of a full-bleed web page. Harness
+ * only, never shipped. Opt in per page with <body class="app-window">; the
+ * gallery and component catalog stay full-page.
+ *
+ * Backdrop is Space Cadet (the palette ink) so a Ghost White window pops —
+ * no new color introduced. Shadow is Space-Cadet-alpha (allowed). */
+html:has(body.app-window) {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--fm-text);
+  overflow: auto;
+}
+body.app-window {
+  /* Canonical krill default — STYLE.md → Window dimensions. Fixed. */
+  width: 1296px;
+  height: 800px;
+  border-radius: 10px;
+  overflow: hidden; /* clip titlebar / status-line corners to the radius */
+  box-shadow:
+    0 24px 60px rgba(48, 52, 63, 0.30),
+    0 4px 12px rgba(48, 52, 63, 0.18);
+}

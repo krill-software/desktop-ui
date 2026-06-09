@@ -1,0 +1,81 @@
+/* App layout — for apps that forgo the titlebar + status line and carry
+ * their own top strip inside the panes (file-drop, audio-editor, paint).
+ * Enabled by mountChrome({ layout: "app" }), which sets body[data-layout="app"].
+ * The strips themselves are still "top bars" (.main-topbar / .aux-topbar) —
+ * the layout is "app", the elements are topbars.
+ *
+ *   main pane:  [ ……… drag ……… ]  [ —  □  × ]
+ *   aux pane :  [≡]  [ ……… drag ……… ]
+ *
+ * Window-control buttons match the titlebar's 22px rounded-box shape so the
+ * two chrome styles read as one family. */
+
+/* Drop the title/status rows; the body grid becomes just (aux) + main. */
+body[data-layout="app"] {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "main";
+}
+body[data-layout="app"][data-aux="visible"] {
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "aux main";
+}
+
+/* Both panes become vertical stacks: top strip, then scroll area. */
+body[data-layout="app"] #viewport,
+body[data-layout="app"] #aux {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.main-topbar,
+.aux-topbar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 8px;
+  flex-shrink: 0;
+  background: var(--fm-bg);
+}
+.main-topbar {
+  justify-content: flex-end; /* window controls sit at the right */
+  gap: 2px;
+}
+.aux-topbar {
+  gap: 2px;
+}
+
+.main-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* 22×22 rounded icon buttons — same as #titlebar-controls. Shared by the
+ * window controls and the aux hamburger. */
+.main-topbar-btn {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--fm-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+.main-topbar-btn:hover {
+  background: var(--fm-rule);
+  color: var(--fm-text);
+}
+.main-topbar-btn[data-kind="close"]:hover {
+  /* Shimmering Blush at low alpha — same destructive hover as the titlebar
+   * close button. On-palette (a derivation of --fm-accent), not a new color. */
+  background: rgba(221, 117, 150, 0.25);
+  color: var(--fm-text);
+}

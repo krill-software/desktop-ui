@@ -57,6 +57,47 @@ export function installMenuBar(container: HTMLElement, menus: MenuDef[]): void {
   });
 }
 
+/** Wire a single hamburger button to a popover holding every menu's items,
+ *  groups separated by a rule. Used by the app layout (`layout: "app"`),
+ *  where there's no horizontal menu bar — the menus live behind one button
+ *  in the aux strip. Reuses the same `.menu-dropdown` rendering as the bar. */
+export function installHamburgerMenu(button: HTMLElement, menus: MenuDef[]): void {
+  const merged: MenuDef = { label: "", items: [] };
+  menus.forEach((menu, i) => {
+    if (i > 0 && merged.items.length > 0) merged.items.push({ sep: true });
+    merged.items.push(...menu.items);
+  });
+
+  let dropdown: HTMLElement | null = null;
+  const close = () => {
+    if (!dropdown) return;
+    dropdown.remove();
+    delete button.dataset.open;
+    dropdown = null;
+  };
+
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (dropdown) { close(); return; }
+    dropdown = renderDropdown(merged, close);
+    document.body.appendChild(dropdown);
+    const rect = button.getBoundingClientRect();
+    dropdown.style.left = `${Math.round(rect.left)}px`;
+    dropdown.style.top = `${Math.round(rect.bottom)}px`;
+    button.dataset.open = "true";
+  });
+
+  document.addEventListener("mousedown", (e) => {
+    if (!dropdown) return;
+    const target = e.target as Node | null;
+    if (target && (dropdown.contains(target) || button.contains(target))) return;
+    close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
+}
+
 function renderDropdown(menu: MenuDef, onClose: () => void): HTMLElement {
   const drop = document.createElement("div");
   drop.className = "menu-dropdown";

@@ -1,5 +1,6 @@
 import { buildTitlebar } from "./titlebar.js";
-import { installMenuBar } from "./menu.js";
+import { installMenuBar, installHamburgerMenu } from "./menu.js";
+import { buildMainTopbar, buildAuxTopbar } from "./topbar.js";
 import { ACTION_REGISTRY, GROUP_LABEL, GROUP_ORDER, MENU_LAYOUT, shouldDeferToText, } from "./actions.js";
 import { isTextTarget, matchShortcut, parseShortcut } from "./keybindings.js";
 import { checkForUpdates } from "./updater.js";
@@ -15,14 +16,37 @@ import { checkForUpdates } from "./updater.js";
 export function mountChrome(opts) {
     const parent = opts.parent ?? document.body;
     parent.replaceChildren();
-    const { titlebar, title, menuBar } = buildTitlebar();
-    parent.appendChild(titlebar);
+    const isApp = opts.layout === "app";
+    // Title + menu-bar refs. The app layout has no titlebar, so these are
+    // detached placeholders — kept non-null to preserve ChromeRefs' shape;
+    // app-layout apps don't read them.
+    let title;
+    let menuBar;
+    if (isApp) {
+        title = document.createElement("span");
+        menuBar = document.createElement("nav");
+        document.body.dataset.layout = "app";
+    }
+    else {
+        const tb = buildTitlebar();
+        parent.appendChild(tb.titlebar);
+        title = tb.title;
+        menuBar = tb.menuBar;
+        document.body.dataset.layout = "document";
+    }
     // Optional AUX pane on the LEFT (tools / nav / settings / output panels).
     // The body grid switches templates based on body[data-aux] — see palette.css.
+    // In the app layout the aux pane leads with a strip carrying the hamburger.
     let aux = null;
+    let hamburger = null;
     if (opts.showAuxPane) {
         aux = document.createElement("aside");
         aux.id = "aux";
+        if (isApp) {
+            const at = buildAuxTopbar();
+            aux.appendChild(at.auxTopbar);
+            hamburger = at.hamburger;
+        }
         parent.appendChild(aux);
         document.body.dataset.aux = "visible";
     }
@@ -32,6 +56,22 @@ export function mountChrome(opts) {
     const viewport = document.createElement("main");
     viewport.id = "viewport";
     parent.appendChild(viewport);
+    // App layout: the main pane carries its own top strip (window controls)
+    // and a scrollable content area. Apps render into `mainContent`.
+    let mainContent = null;
+    if (isApp) {
+        const mainTopbar = buildMainTopbar();
+        mainContent = document.createElement("div");
+        mainContent.className = "main-content";
+        // No aux pane → host the hamburger at the left of the main strip.
+        if (!opts.showAuxPane) {
+            const at = buildAuxTopbar();
+            hamburger = at.hamburger;
+            hamburger.style.marginRight = "auto";
+            mainTopbar.prepend(hamburger);
+        }
+        viewport.append(mainTopbar, mainContent);
+    }
     let statusLine = null;
     let statusInfo = null;
     let statusState = null;
@@ -57,10 +97,14 @@ export function mountChrome(opts) {
         ? `${opts.productName} ${opts.version}`
         : undefined;
     const menus = buildMenus(actions, opts.customMenu ?? [], versionLine);
-    if (menus.length > 0)
-        installMenuBar(menuBar, menus);
+    if (menus.length > 0) {
+        if (isApp && hamburger)
+            installHamburgerMenu(hamburger, menus);
+        else
+            installMenuBar(menuBar, menus);
+    }
     installShortcutHandler(actions, opts.customMenu ?? [], opts.bindings ?? {});
-    return { title, menuBar, viewport, aux, statusLine, statusInfo, statusState };
+    return { title, menuBar, viewport, mainContent, aux, statusLine, statusInfo, statusState };
 }
 /** Auto-include `close-window` and `quit` with their package defaults if
  *  the app didn't provide callbacks. Every krill app gets them. When

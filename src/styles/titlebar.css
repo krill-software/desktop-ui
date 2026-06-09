@@ -75,6 +75,10 @@
   color: var(--fm-text);
 }
 #titlebar-controls #titlebar-close:hover {
-  background: #e8a5a5;
+  /* Shimmering Blush at low alpha — a derivation of --fm-accent, not a new
+   * color. Reads as the destructive control while staying on-palette.
+   * Candidate to become a generated token (e.g. --fm-danger) once
+   * color-editor owns palette.css. */
+  background: rgba(221, 117, 150, 0.25);
   color: var(--fm-text);
 }

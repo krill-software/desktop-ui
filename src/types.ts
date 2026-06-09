@@ -59,8 +59,15 @@ export interface ChromeRefs {
   /** The menu-bar container inside the titlebar. Most apps don't touch this directly. */
   menuBar: HTMLElement;
   /** MAIN pane — primary work view (canvas, page reader, editor, color
-   *  wheel). On the right when an aux pane is also shown. */
+   *  wheel). On the right when an aux pane is also shown. In the app
+   *  layout (`layout: "app"`) this is the flex column that holds the
+   *  in-viewport main-topbar plus `mainContent`; render into `mainContent`,
+   *  not here. */
   viewport: HTMLElement;
+  /** Scroll content area below the in-viewport main-topbar, present only in
+   *  the app layout (`layout: "app"`). Apps render their working view here.
+   *  Null in standard titlebar chrome. */
+  mainContent: HTMLElement | null;
   /** AUX pane — left-side support surface (tools, settings, navigation,
    *  output panels). Null if `showAuxPane` was false. Width is fixed at
    *  260px in v0.3; resizable splitter is a future feature. */
@@ -97,6 +104,16 @@ export interface MountChromeOptions {
    *  Apps that don't need an aux pane (image-viewer, markdown-editor)
    *  leave this false. */
   showAuxPane?: boolean;
+  /** Window layout.
+   *  - `"document"` (default): the classic framed desktop window — menu bar +
+   *    centered title in the titlebar, status line at the bottom.
+   *  - `"app"`: the app-style workspace — no titlebar/status line; the main
+   *    pane carries its own top strip (drag region + min/max/close window
+   *    controls) and a scrollable content area, and the aux pane gets a
+   *    matching strip with a hamburger that opens the menu. Render the working
+   *    view into `chrome.mainContent`; `version` still feeds the Help menu via
+   *    the hamburger. Used by file-drop, audio-editor, paint, and others. */
+  layout?: "document" | "app";
   /** Where to mount the chrome. Defaults to `document.body`. */
   parent?: HTMLElement;
   /** Enable the canonical "Check for updates…" entry in the Help menu.
