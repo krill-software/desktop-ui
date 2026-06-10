@@ -1,20 +1,16 @@
 /* Fonts bundled by desktop-ui so every krill app renders chrome and
  * editor surfaces identically across systems.
  *
- * - JetBrains Mono is the suite's mono. It's wider and more visibly
- *   "code-like" than Hasklig; we use it for chrome (titlebar, menu,
- *   status line) and as the default --fm-mono.
- * - Hasklig is kept around as the editor-body monospace for apps that
- *   want a calmer, more text-like mono in long-form documents
- *   (text-editor's editor surface). Apps opt in by referencing
- *   "Hasklig" directly in their local CSS.
+ * - JetBrains Mono is the suite's sole mono — chrome (titlebar, menu,
+ *   status line), code, and the default --fm-mono. (It supersedes Hasklig,
+ *   which was dropped in v0.12.0.)
  * - Inter is the suite sans (--text-family-sans), Charter the suite serif
  *   (--text-family-serif). Bundled here so every app gets them without
  *   re-declaring @font-face or copying woff2 locally. Inter ships
  *   400/600/700 (no italic); Charter ships 400/700 + italics.
  *
- * Licenses: fonts/LICENSE-JetBrainsMono.txt, fonts/LICENSE-Hasklig.md,
- *           fonts/LICENSE-Inter.txt, fonts/LICENSE-Charter.txt.
+ * Licenses: fonts/LICENSE-JetBrainsMono.txt, fonts/LICENSE-Inter.txt,
+ *           fonts/LICENSE-Charter.txt.
  */
 
 @font-face {
@@ -44,35 +40,6 @@
   font-style: italic;
   font-display: block;
   src: url("fonts/JetBrainsMono-BoldItalic.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Hasklig";
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-  src: url("fonts/Hasklig-Regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Hasklig";
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
-  src: url("fonts/Hasklig-Bold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Hasklig";
-  font-weight: 400;
-  font-style: italic;
-  font-display: block;
-  src: url("fonts/Hasklig-Italic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Hasklig";
-  font-weight: 700;
-  font-style: italic;
-  font-display: block;
-  src: url("fonts/Hasklig-BoldItalic.woff2") format("woff2");
 }
 
 @font-face {
