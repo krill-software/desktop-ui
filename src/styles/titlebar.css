@@ -19,6 +19,7 @@
   padding: 0 16px; /* symmetric edge gutter; children sit flush to it */
   background: var(--fm-bg);
   border-bottom: 1px solid var(--fm-rule);
+  user-select: none;
 }
 
 /* Fullscreen visibility lives in layout.css with the rest of body chrome. */

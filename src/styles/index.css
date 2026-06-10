@@ -10,9 +10,9 @@
  *   import "@krill-software/desktop-ui/styles/titlebar.css";
  */
 
+@import "./fonts.css";
 @import "./typography.css";
 @import "./palette.css";
-@import "./fonts.css";
 @import "./reset.css";
 @import "./kbd.css";
 @import "./titlebar.css";

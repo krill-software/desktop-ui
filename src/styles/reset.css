@@ -7,10 +7,13 @@ html, body {
   height: 100%;
   background: var(--fm-bg);
   color: var(--fm-text);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 13px;
-  user-select: none;
+  font-family: var(--fm-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-leading-normal);
   overflow: hidden;
+  /* No global user-select:none — content is selectable by default. The
+     chrome components (titlebar, menu, status line, topbars) each set their
+     own user-select:none, so apps never have to re-enable it on content. */
 }
 
 button { font-family: inherit; }

@@ -38,6 +38,7 @@ body[data-layout="app"] #aux {
   padding: 0 8px;
   flex-shrink: 0;
   background: var(--fm-bg);
+  user-select: none;
 }
 .main-topbar {
   justify-content: flex-end; /* window controls sit at the right */
