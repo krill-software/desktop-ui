@@ -1,7 +1,7 @@
 /* <kbd> — palette-correct keyboard chip used in empty states / hints. */
 
 kbd {
-  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-family: var(--fm-mono);
   font-size: 11px;
   background: var(--fm-bg);
   border: 1px solid var(--fm-rule-strong);

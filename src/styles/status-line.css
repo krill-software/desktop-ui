@@ -51,7 +51,7 @@
 
 /* Monospace utility — applied to numeric fields so they don't jitter. */
 #status-line :is(.mono, [data-mono]) {
-  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-family: var(--fm-mono);
 }
 
 /* Small dot separator between info chips, used inline. */

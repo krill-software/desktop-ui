@@ -1,6 +1,6 @@
 {
   "name": "@krill-software/desktop-ui",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Shared UI primitives for krill desktop apps — palette, titlebar, menu, status line.",
   "license": "MIT",
   "type": "module",
