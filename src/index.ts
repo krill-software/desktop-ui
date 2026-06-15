@@ -10,6 +10,8 @@ export { checkForUpdates } from "./updater.js";
 export { buildLoader, buildLoaderIcon } from "./loader.js";
 export { buildFilterInput } from "./filter-input.js";
 export type { FilterInputOptions, FilterInputRefs } from "./filter-input.js";
+export { parseGpl, serializeGpl } from "./palette.js";
+export type { Palette, PaletteColor, SerializeGplOptions } from "./palette.js";
 export type {
   ActionCallback,
   ActionId,
