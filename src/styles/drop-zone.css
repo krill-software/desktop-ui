@@ -1,0 +1,41 @@
+/* Shared file drop zone. A dashed target that turns solid on hover / focus /
+ * drag-over and opens a picker on click. Same shape across every krill app's
+ * empty-load state so "drop a file here" feels like one platform element. */
+
+.fm-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 36px 24px;
+  border: 1.5px dashed var(--fm-rule-strong);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--fm-muted);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+/* Dashed by default; solid the moment it's hovered, focused, or dragged onto. */
+.fm-dropzone:hover,
+.fm-dropzone:focus-visible,
+.fm-dropzone[data-drag="true"] {
+  border-style: solid;
+  border-color: var(--fm-accent);
+  color: var(--fm-text);
+  outline: none;
+}
+.fm-dropzone[data-drag="true"] { background: rgba(221, 117, 150, 0.06); }
+.fm-dropzone:focus-visible { box-shadow: 0 0 0 3px rgba(221, 117, 150, 0.18); }
+
+.fm-dropzone svg { color: var(--fm-muted); transition: color 120ms ease; }
+.fm-dropzone:hover svg,
+.fm-dropzone:focus-visible svg,
+.fm-dropzone[data-drag="true"] svg { color: var(--fm-accent); }
+
+.fm-dropzone-label { font-size: 14px; }
+.fm-dropzone-hint { font-size: 12px; color: var(--fm-muted); }
