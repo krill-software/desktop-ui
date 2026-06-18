@@ -10,6 +10,7 @@ import {
 } from "./actions.js";
 import { isTextTarget, matchShortcut, parseShortcut, type ParsedShortcut } from "./keybindings.js";
 import { checkForUpdates } from "./updater.js";
+import { initTheme } from "./theme.js";
 import type {
   ActionCallback,
   ActionId,
@@ -30,6 +31,10 @@ import type {
  *  and `customMenu` (app-specific extras). `bindings` adds shortcuts
  *  that don't surface as menu entries. */
 export function mountChrome(opts: MountChromeOptions): ChromeRefs {
+  // Apply any persisted light/dark override before building chrome, so an
+  // overridden app paints its chosen theme rather than flashing the system one.
+  initTheme();
+
   const parent = opts.parent ?? document.body;
   parent.replaceChildren();
 

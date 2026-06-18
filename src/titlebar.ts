@@ -1,4 +1,5 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
 
 // `#titlebar-title` is a sibling of the drag region, not a child — that way
 // it can be absolute-positioned at the visual center of the *full* titlebar
@@ -9,6 +10,9 @@ const TITLEBAR_HTML = `
   <div id="titlebar-drag" data-tauri-drag-region></div>
   <span id="titlebar-title"></span>
   <div id="titlebar-controls">
+    <button id="titlebar-theme" type="button" aria-label="Toggle theme" title="Toggle theme">
+      ${THEME_TOGGLE_SVG}
+    </button>
     <button id="titlebar-min" type="button" aria-label="Minimize" title="Minimize">
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
         <line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -48,6 +52,8 @@ export function buildTitlebar(): { titlebar: HTMLElement; title: HTMLElement; me
       void h();
     });
   };
+  const themeBtn = titlebar.querySelector("#titlebar-theme");
+  if (themeBtn) wireThemeToggle(themeBtn as HTMLElement);
   bind(titlebar.querySelector("#titlebar-min"), () => w.minimize());
   bind(titlebar.querySelector("#titlebar-max"), async () =>
     (await w.isMaximized()) ? w.unmaximize() : w.maximize(),

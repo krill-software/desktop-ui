@@ -1,1 +1,1 @@
-{"version":3,"file":"titlebar.d.ts","sourceRoot":"","sources":["../src/titlebar.ts"],"names":[],"mappings":"AA+BA;;wEAEwE;AACxE,wBAAgB,aAAa,IAAI;IAAE,QAAQ,EAAE,WAAW,CAAC;IAAC,KAAK,EAAE,WAAW,CAAC;IAAC,OAAO,EAAE,WAAW,CAAA;CAAE,CA0BnG"}
+{"version":3,"file":"titlebar.d.ts","sourceRoot":"","sources":["../src/titlebar.ts"],"names":[],"mappings":"AAmCA;;wEAEwE;AACxE,wBAAgB,aAAa,IAAI;IAAE,QAAQ,EAAE,WAAW,CAAC;IAAC,KAAK,EAAE,WAAW,CAAC;IAAC,OAAO,EAAE,WAAW,CAAA;CAAE,CA4BnG"}

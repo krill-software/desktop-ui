@@ -1,1 +1,1 @@
-{"version":3,"file":"topbar.d.ts","sourceRoot":"","sources":["../src/topbar.ts"],"names":[],"mappings":"AAyCA;0CAC0C;AAC1C,wBAAgB,eAAe,IAAI,WAAW,CAiB7C;AAED;4EAC4E;AAC5E,wBAAgB,cAAc,IAAI;IAAE,SAAS,EAAE,WAAW,CAAC;IAAC,SAAS,EAAE,WAAW,CAAA;CAAE,CAQnF"}
+{"version":3,"file":"topbar.d.ts","sourceRoot":"","sources":["../src/topbar.ts"],"names":[],"mappings":"AA0CA;0CAC0C;AAC1C,wBAAgB,eAAe,IAAI,WAAW,CAmB7C;AAED;4EAC4E;AAC5E,wBAAgB,cAAc,IAAI;IAAE,SAAS,EAAE,WAAW,CAAC;IAAC,SAAS,EAAE,WAAW,CAAA;CAAE,CAQnF"}

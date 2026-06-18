@@ -1,4 +1,5 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
 /* Top-strip chrome for the app layout: in-viewport top bars that replace the
  * titlebar for apps that forgo the document chrome (file-drop, audio-editor,
  * paint). The layout is "app"; these strips are its top bars.
@@ -43,13 +44,15 @@ export function buildMainTopbar() {
     bar.className = "main-topbar";
     bar.setAttribute("data-tauri-drag-region", "");
     const w = getCurrentWindow();
+    const theme = iconButton("Toggle theme", THEME_TOGGLE_SVG);
+    wireThemeToggle(theme);
     const min = iconButton("Minimize", MIN_SVG);
     min.addEventListener("click", () => void w.minimize());
     const max = iconButton("Maximize", MAX_SVG);
     max.addEventListener("click", async () => (await w.isMaximized()) ? w.unmaximize() : w.maximize());
     const close = iconButton("Close", CLOSE_SVG, "close");
     close.addEventListener("click", () => void w.close());
-    bar.append(min, max, close);
+    bar.append(theme, min, max, close);
     return bar;
 }
 /** The aux pane's top strip: a hamburger on the left (caller wires it to the

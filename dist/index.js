@@ -2,6 +2,7 @@ export { installMenuBar, installHamburgerMenu } from "./menu.js";
 export { buildTitlebar } from "./titlebar.js";
 export { buildMainTopbar, buildAuxTopbar } from "./topbar.js";
 export { mountChrome } from "./shell.js";
+export { initTheme, effectiveTheme, wireThemeToggle, THEME_TOGGLE_SVG } from "./theme.js";
 export { ACTION_REGISTRY } from "./actions.js";
 export { buildEmptyState, buildErrorState } from "./empty-state.js";
 export { showBootError } from "./boot-error.js";

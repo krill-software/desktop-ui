@@ -4,6 +4,7 @@ import { buildMainTopbar, buildAuxTopbar } from "./topbar.js";
 import { ACTION_REGISTRY, GROUP_LABEL, GROUP_ORDER, MENU_LAYOUT, shouldDeferToText, } from "./actions.js";
 import { isTextTarget, matchShortcut, parseShortcut } from "./keybindings.js";
 import { checkForUpdates } from "./updater.js";
+import { initTheme } from "./theme.js";
 /** Build and mount the standard krill app chrome — titlebar, menu bar,
  *  optional status line, viewport. Returns refs the app uses to populate
  *  dynamic content (filename, status indicators) and to render its
@@ -14,6 +15,9 @@ import { checkForUpdates } from "./updater.js";
  *  and `customMenu` (app-specific extras). `bindings` adds shortcuts
  *  that don't surface as menu entries. */
 export function mountChrome(opts) {
+    // Apply any persisted light/dark override before building chrome, so an
+    // overridden app paints its chosen theme rather than flashing the system one.
+    initTheme();
     const parent = opts.parent ?? document.body;
     parent.replaceChildren();
     const isApp = opts.layout === "app";

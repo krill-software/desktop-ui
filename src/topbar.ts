@@ -1,4 +1,5 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
 
 /* Top-strip chrome for the app layout: in-viewport top bars that replace the
  * titlebar for apps that forgo the document chrome (file-drop, audio-editor,
@@ -47,6 +48,8 @@ export function buildMainTopbar(): HTMLElement {
   bar.setAttribute("data-tauri-drag-region", "");
 
   const w = getCurrentWindow();
+  const theme = iconButton("Toggle theme", THEME_TOGGLE_SVG);
+  wireThemeToggle(theme);
   const min = iconButton("Minimize", MIN_SVG);
   min.addEventListener("click", () => void w.minimize());
   const max = iconButton("Maximize", MAX_SVG);
@@ -56,7 +59,7 @@ export function buildMainTopbar(): HTMLElement {
   const close = iconButton("Close", CLOSE_SVG, "close");
   close.addEventListener("click", () => void w.close());
 
-  bar.append(min, max, close);
+  bar.append(theme, min, max, close);
   return bar;
 }
 
