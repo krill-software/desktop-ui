@@ -107,7 +107,7 @@ export function familyOf(r, g, b) {
         return "Cyan";
     if (h < 255)
         return "Blue";
-    if (h < 290)
+    if (h < 320)
         return "Purple";
     return "Pink";
 }

@@ -122,7 +122,7 @@ export function familyOf(r: number, g: number, b: number): ColorFamily {
   if (h < 150) return "Green";
   if (h < 195) return "Cyan";
   if (h < 255) return "Blue";
-  if (h < 290) return "Purple";
+  if (h < 320) return "Purple";
   return "Pink";
 }
 
