@@ -21,4 +21,11 @@ export interface SerializeGplOptions {
 /** Serialize colors to GIMP Palette text. Accepts `{ hex, name? }` objects or
  *  bare hex strings. */
 export declare function serializeGpl(opts: SerializeGplOptions): string;
+/** Fixed display order; render-time, empty families are dropped. */
+export declare const FAMILY_ORDER: readonly ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Neutral"];
+export type ColorFamily = (typeof FAMILY_ORDER)[number];
+/** Which family a 0–255 RGB triple belongs to. */
+export declare function familyOf(r: number, g: number, b: number): ColorFamily;
+/** Like `familyOf` but from a hex string; unparseable hex falls to Neutral. */
+export declare function familyOfHex(hex: string): ColorFamily;
 //# sourceMappingURL=palette.d.ts.map

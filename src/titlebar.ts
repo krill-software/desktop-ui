@@ -6,13 +6,13 @@ import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
 // instead of just the middle flex slot.
 const TITLEBAR_HTML = `
 <header id="titlebar">
+  <button id="titlebar-theme" type="button" aria-label="Toggle theme" title="Toggle theme">
+    ${THEME_TOGGLE_SVG}
+  </button>
   <nav id="menu-bar"></nav>
   <div id="titlebar-drag" data-tauri-drag-region></div>
   <span id="titlebar-title"></span>
   <div id="titlebar-controls">
-    <button id="titlebar-theme" type="button" aria-label="Toggle theme" title="Toggle theme">
-      ${THEME_TOGGLE_SVG}
-    </button>
     <button id="titlebar-min" type="button" aria-label="Minimize" title="Minimize">
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
         <line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>

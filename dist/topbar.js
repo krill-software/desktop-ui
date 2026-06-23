@@ -5,7 +5,7 @@ import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
  * paint). The layout is "app"; these strips are its top bars.
  *
  *   main pane:  [ ……… drag region ……… ]  [ —  □  × ]
- *   aux pane :  [≡]  [ ……… drag region ……… ]
+ *   aux pane :  [◐] [≡]  [ ……… drag region ……… ]
  *
  * Window-control glyphs are the same ones the titlebar uses, so app-layout apps
  * read as the same family as the titlebar apps. The bar itself is the drag
@@ -44,25 +44,27 @@ export function buildMainTopbar() {
     bar.className = "main-topbar";
     bar.setAttribute("data-tauri-drag-region", "");
     const w = getCurrentWindow();
-    const theme = iconButton("Toggle theme", THEME_TOGGLE_SVG);
-    wireThemeToggle(theme);
     const min = iconButton("Minimize", MIN_SVG);
     min.addEventListener("click", () => void w.minimize());
     const max = iconButton("Maximize", MAX_SVG);
     max.addEventListener("click", async () => (await w.isMaximized()) ? w.unmaximize() : w.maximize());
     const close = iconButton("Close", CLOSE_SVG, "close");
     close.addEventListener("click", () => void w.close());
-    bar.append(theme, min, max, close);
+    bar.append(min, max, close);
     return bar;
 }
-/** The aux pane's top strip: a hamburger on the left (caller wires it to the
- *  menu) plus a drag region. Returns the strip and the hamburger button. */
+/** The aux pane's top strip: the color-mode toggle and a hamburger on the left
+ *  (caller wires the hamburger to the menu) plus a drag region. Returns the
+ *  strip, the hamburger, and the theme toggle (already wired) so the no-aux
+ *  layout can re-home both into the main strip. */
 export function buildAuxTopbar() {
     const bar = document.createElement("div");
     bar.className = "aux-topbar";
     bar.setAttribute("data-tauri-drag-region", "");
+    const theme = iconButton("Toggle theme", THEME_TOGGLE_SVG);
+    wireThemeToggle(theme);
     const hamburger = iconButton("Menu", MENU_SVG);
-    bar.append(hamburger);
-    return { auxTopbar: bar, hamburger };
+    bar.append(theme, hamburger);
+    return { auxTopbar: bar, hamburger, theme };
 }
 //# sourceMappingURL=topbar.js.map

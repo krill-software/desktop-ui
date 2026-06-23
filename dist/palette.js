@@ -79,4 +79,61 @@ export function serializeGpl(opts) {
     }
     return out.join("\n") + "\n";
 }
+// ---- color family grouping -------------------------------------------
+//
+// The .gpl format carries no grouping. To show a flat palette organized, bucket
+// each color into a hue family derived from its HSL: chromatic colors fall into
+// a hue band, while low-saturation / near-black / near-white colors collect as
+// Neutral (their hue is meaningless). Shared so every app that displays a
+// palette groups it identically and uses the same family labels.
+/** Fixed display order; render-time, empty families are dropped. */
+export const FAMILY_ORDER = [
+    "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Neutral",
+];
+/** Which family a 0–255 RGB triple belongs to. */
+export function familyOf(r, g, b) {
+    const { h, s, l } = rgbToHsl(r, g, b);
+    if (s < 12 || l < 6 || l > 97)
+        return "Neutral";
+    if (h < 15 || h >= 345)
+        return "Red";
+    if (h < 45)
+        return "Orange";
+    if (h < 65)
+        return "Yellow";
+    if (h < 150)
+        return "Green";
+    if (h < 195)
+        return "Cyan";
+    if (h < 255)
+        return "Blue";
+    if (h < 290)
+        return "Purple";
+    return "Pink";
+}
+/** Like `familyOf` but from a hex string; unparseable hex falls to Neutral. */
+export function familyOfHex(hex) {
+    const rgb = hexToRgb(hex);
+    return rgb ? familyOf(rgb[0], rgb[1], rgb[2]) : "Neutral";
+}
+// HSL with h in [0,360), s and l in [0,100] — the ranges familyOf's cutoffs
+// assume.
+function rgbToHsl(r, g, b) {
+    const rn = r / 255, gn = g / 255, bn = b / 255;
+    const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
+    const l = (max + min) / 2;
+    const d = max - min;
+    if (d === 0)
+        return { h: 0, s: 0, l: l * 100 };
+    const s = d / (1 - Math.abs(2 * l - 1));
+    let h;
+    if (max === rn)
+        h = ((gn - bn) / d) % 6;
+    else if (max === gn)
+        h = (bn - rn) / d + 2;
+    else
+        h = (rn - gn) / d + 4;
+    h = (h * 60 + 360) % 360;
+    return { h, s: s * 100, l: l * 100 };
+}
 //# sourceMappingURL=palette.js.map

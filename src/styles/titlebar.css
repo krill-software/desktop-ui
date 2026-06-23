@@ -1,6 +1,6 @@
 /* Krill custom titlebar — 44px chrome at the top of every window.
  *
- *   [File Edit View]  [drag region — centered title]  [—  □  ×]
+ *   [◐]  [File Edit View]  [drag region — centered title]  [—  □  ×]
  *
  * Layout grid: 8px gutter on each side of the bar. Menu triggers
  * (File / Edit / …) and window controls (min / max / close) render as
@@ -27,6 +27,29 @@
 #titlebar-drag {
   flex: 1;
   min-width: 0;
+}
+
+/* Color-mode toggle — leftmost in the bar, just before the menu. Styled like a
+ * window control but living outside the right-hand cluster. */
+#titlebar-theme {
+  align-self: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--fm-muted);
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+#titlebar-theme:hover {
+  background: var(--fm-rule);
+  color: var(--fm-text);
 }
 
 /* Filename — centered on the *full* titlebar (not the flex middle slot) so it

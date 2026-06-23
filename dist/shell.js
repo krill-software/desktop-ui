@@ -67,12 +67,15 @@ export function mountChrome(opts) {
         const mainTopbar = buildMainTopbar();
         mainContent = document.createElement("div");
         mainContent.className = "main-content";
-        // No aux pane → host the hamburger at the left of the main strip.
+        // No aux pane → host the color-mode toggle + hamburger at the left of the
+        // main strip ([◐] [≡] … [— □ ×]). The hamburger's auto right-margin pushes
+        // the window controls to the far right.
         if (!opts.showAuxPane) {
             const at = buildAuxTopbar();
             hamburger = at.hamburger;
             hamburger.style.marginRight = "auto";
             mainTopbar.prepend(hamburger);
+            mainTopbar.prepend(at.theme);
         }
         viewport.append(mainTopbar, mainContent);
     }

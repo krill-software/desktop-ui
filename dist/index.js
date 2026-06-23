@@ -10,5 +10,5 @@ export { checkForUpdates } from "./updater.js";
 export { buildLoader, buildLoaderIcon } from "./loader.js";
 export { buildFilterInput } from "./filter-input.js";
 export { buildDropZone } from "./drop-zone.js";
-export { parseGpl, serializeGpl } from "./palette.js";
+export { parseGpl, serializeGpl, familyOf, familyOfHex, FAMILY_ORDER } from "./palette.js";
 //# sourceMappingURL=index.js.map
