@@ -6,7 +6,7 @@ import { mountChrome } from "../src/index.js";
  * strip (drag region + window controls), the aux pane carries a strip with a
  * hamburger that opens the menu, and content scrolls in .main-content. Used by
  * file-drop, audio-editor, paint, color-editor, system-monitor,
- * markdown-viewer, photo-importer. */
+ * markdown-reader, photo-importer. */
 
 const chrome = mountChrome({
   productName: "App",

@@ -25,7 +25,7 @@ import "@krill-software/desktop-ui/styles";
 import { mountChrome } from "@krill-software/desktop-ui";
 
 const chrome = mountChrome({
-  productName: "Document Viewer",
+  productName: "PDF Reader",
 
   // Canonical actions — package owns the label, shortcut, and menu group;
   // app provides the callback. `close-window` and `quit` are auto-included.
@@ -53,7 +53,7 @@ const chrome = mountChrome({
   showStatusLine: true,
 });
 
-chrome.title.textContent = "paper.pdf — Document Viewer";
+chrome.title.textContent = "paper.pdf — PDF Reader";
 chrome.viewport.appendChild(myCanvas);
 chrome.statusLine?.appendChild(myPositionEl);
 ```

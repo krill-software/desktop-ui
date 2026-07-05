@@ -4,7 +4,7 @@ import { mountChrome } from "../src/index.js";
 
 /* Quiet single-column archetype: titlebar + inline menu, a chrome-free
  * viewport, and a status line. No aux pane. The shape most krill apps use
- * (text-editor, image-viewer, document-viewer, csv-editor, markdown-editor). */
+ * (text-editor, image-viewer, pdf-reader, csv-editor, markdown-editor). */
 
 const chrome = mountChrome({
   productName: "Quiet",
