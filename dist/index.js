@@ -9,6 +9,7 @@ export { showBootError } from "./boot-error.js";
 export { checkForUpdates } from "./updater.js";
 export { buildLoader, buildLoaderIcon } from "./loader.js";
 export { buildFilterInput } from "./filter-input.js";
+export { buildTextSearch } from "./text-search.js";
 export { buildDropZone } from "./drop-zone.js";
 export { parseGpl, serializeGpl, familyOf, familyOfHex, FAMILY_ORDER } from "./palette.js";
 //# sourceMappingURL=index.js.map

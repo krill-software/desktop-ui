@@ -1,0 +1,62 @@
+/* Shared text search input for editors. */
+
+.fm-text-search {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  gap: 8px;
+  align-items: center;
+  background: var(--fm-bg);
+  border: 1px solid var(--fm-rule-strong);
+  border-radius: 6px;
+  padding: 4px 8px;
+  z-index: 100;
+  font-family: var(--fm-mono);
+}
+
+.fm-text-search-input {
+  width: 160px;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  color: var(--fm-text);
+  font-family: var(--fm-mono);
+  font-size: 12px;
+  outline: none;
+  transition: box-shadow 120ms ease;
+}
+
+.fm-text-search-input::placeholder {
+  color: var(--fm-muted);
+}
+
+.fm-text-search-input:focus {
+  box-shadow: 0 0 0 2px rgba(221, 117, 150, 0.18);
+}
+
+.fm-text-search-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--fm-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 120ms ease;
+  outline: none;
+}
+
+.fm-text-search-close:hover {
+  color: var(--fm-text);
+}
+
+.fm-text-search-close:focus {
+  outline: 2px solid var(--fm-accent);
+  outline-offset: -2px;
+}
