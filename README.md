@@ -7,6 +7,7 @@ Shared UI primitives for [krill-software](https://github.com/krill-software) des
 - **CSS bundle** — palette variables (5 named colors + Space-Cadet alpha rules), base reset, titlebar, menu bar, optional status line, `kbd` styling, opt-in scrollbars.
 - **`mountChrome()`** — one call that builds the titlebar DOM, wires window controls (incl. a light/dark theme toggle that defaults to system-following and persists a per-app override), generates the menu bar from the canonical action registry, wires keyboard shortcuts, and (optionally) adds a status line. Returns refs the app uses to populate dynamic content.
 - **`ACTION_REGISTRY`** — single source of truth for the label, shortcut, and menu group of every krill-canonical action (Save = Ctrl+S, Open = Ctrl+O, Fullscreen = F, etc.). Apps register *callbacks*; everything else is owned by the package.
+- **`lucideIcon(node, size?)`** — a [Lucide](https://lucide.dev) glyph as an inline SVG for chrome (sidebar rows, toolbar buttons, list icons): `currentColor` stroke, 16px default, `aria-hidden`. Takes the icon node (`import { Folder } from "lucide"`) so bundles tree-shake. `lucide` is an optional peer dep — only apps that draw glyphs install it.
 
 ## Install
 

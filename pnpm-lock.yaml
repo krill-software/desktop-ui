@@ -20,6 +20,9 @@ importers:
       '@tauri-apps/plugin-updater':
         specifier: ^2.0.0
         version: 2.10.1
+      lucide:
+        specifier: ^0.469.0
+        version: 0.469.0
       typescript:
         specifier: ^5.6.0
         version: 5.9.3
@@ -330,6 +333,9 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
+  lucide@0.469.0:
+    resolution: {integrity: sha512-ZmMtOekJ6g1UFqTvV9aWbkk+u/QxpfDpgUrbNj8jJEK+CtBdHVQ4akCA0TcTyeOvnL8RWo271UzFTimBRT0gKw==}
+
   nanoid@3.3.12:
     resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -577,6 +583,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  lucide@0.469.0: {}
 
   nanoid@3.3.12: {}
 

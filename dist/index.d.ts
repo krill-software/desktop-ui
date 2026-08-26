@@ -17,6 +17,7 @@ export type { TextSearchOptions, TextSearchRefs } from "./text-search.js";
 export { buildDropZone } from "./drop-zone.js";
 export type { DropZoneOptions, DropZoneRefs } from "./drop-zone.js";
 export { parseGpl, serializeGpl, familyOf, familyOfHex, FAMILY_ORDER } from "./palette.js";
+export { lucideIcon } from "./lucide.js";
 export type { Palette, PaletteColor, SerializeGplOptions, ColorFamily } from "./palette.js";
 export type { ActionCallback, ActionId, ChromeRefs, CustomMenuExtension, CustomMenuItem, MenuDef, MenuGroup, MenuItem, MountChromeOptions, } from "./types.js";
 //# sourceMappingURL=index.d.ts.map

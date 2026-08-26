@@ -12,4 +12,5 @@ export { buildFilterInput } from "./filter-input.js";
 export { buildTextSearch } from "./text-search.js";
 export { buildDropZone } from "./drop-zone.js";
 export { parseGpl, serializeGpl, familyOf, familyOfHex, FAMILY_ORDER } from "./palette.js";
+export { lucideIcon } from "./lucide.js";
 //# sourceMappingURL=index.js.map
