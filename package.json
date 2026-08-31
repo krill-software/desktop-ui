@@ -1,6 +1,6 @@
 {
   "name": "@krill-software/desktop-ui",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Shared UI primitives for krill desktop apps — palette, titlebar, menu, status line.",
   "license": "MIT",
   "type": "module",
@@ -14,6 +14,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./lucide": {
+      "import": "./dist/lucide.js",
+      "types": "./dist/lucide.d.ts"
     },
     "./styles": "./src/styles/index.css",
     "./styles/*": "./src/styles/*.css"
