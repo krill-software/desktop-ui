@@ -11,7 +11,8 @@ import { THEME_TOGGLE_SVG, wireThemeToggle } from "./theme.js";
  * Window-control glyphs are the same ones the titlebar uses, so app-layout apps
  * read as the same family as the titlebar apps. The bar itself is the drag
  * region (data-tauri-drag-region); the buttons sit inside it but, lacking
- * the attribute, stay clickable. */
+ * the attribute, stay clickable. The strips run to the window edge, so each one
+ * also gets resize guards — see addResizeGuards(). */
 
 const MIN_SVG = `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
   <line x1="2" y1="6" x2="10" y2="6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -28,6 +29,28 @@ const MENU_SVG = `<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="t
   <line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
   <line x1="2" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
 </svg>`;
+
+/** Cover the bar's window-edge bands with strips that are *not* drag regions.
+ *
+ *  Undecorated windows get their resize edges from tao: it hit-tests a 5px
+ *  border on button-press, begins a resize drag, and lets the click continue
+ *  into the webview. Where that band lies inside a drag region the webview then
+ *  async-invokes `start_dragging`, and the later move drag supersedes the
+ *  resize — grabbing the window's top edge moves it instead of resizing it.
+ *
+ *  Each guard is absolutely positioned over the band and, being the topmost
+ *  element there, becomes the event target; the bar's bare drag attribute only
+ *  matches direct hits, so the click is no longer a drag and tao's resize
+ *  stands. Guards sit above the bar's edges rather than shrinking the drag
+ *  region, so nothing about the strip's layout changes. */
+function addResizeGuards(bar: HTMLElement): void {
+  for (const edge of ["top", "left", "right"]) {
+    const guard = document.createElement("div");
+    guard.className = "topbar-resize-guard";
+    guard.dataset.edge = edge;
+    bar.appendChild(guard);
+  }
+}
 
 function iconButton(label: string, svg: string, kind?: string): HTMLButtonElement {
   const btn = document.createElement("button");
@@ -58,6 +81,7 @@ export function buildMainTopbar(): HTMLElement {
   close.addEventListener("click", () => void w.close());
 
   bar.append(min, max, close);
+  addResizeGuards(bar);
   return bar;
 }
 
@@ -74,5 +98,6 @@ export function buildAuxTopbar(): { auxTopbar: HTMLElement; hamburger: HTMLEleme
   wireThemeToggle(theme);
   const hamburger = iconButton("Menu", MENU_SVG);
   bar.append(theme, hamburger);
+  addResizeGuards(bar);
   return { auxTopbar: bar, hamburger, theme };
 }

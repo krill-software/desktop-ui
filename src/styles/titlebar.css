@@ -24,9 +24,18 @@
 
 /* Fullscreen visibility lives in layout.css with the rest of body chrome. */
 
+/* The top 6px are deliberately *not* draggable. Undecorated windows get their
+ * resize edges from tao, which hit-tests a 5px border on button-press, starts a
+ * resize drag, and lets the click continue into the webview. If the drag region
+ * reached y=0 the webview would then async-invoke `start_dragging`, and the
+ * later move drag would supersede the resize — the window would move instead of
+ * resizing whenever you grabbed its top edge. Keeping the region clear of the
+ * band leaves the resize uncontested; #titlebar itself carries no drag
+ * attribute, so the strip above is inert. */
 #titlebar-drag {
   flex: 1;
   min-width: 0;
+  margin-top: 6px;
 }
 
 /* Color-mode toggle — leftmost in the bar, just before the menu. Styled like a

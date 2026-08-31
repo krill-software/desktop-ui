@@ -32,6 +32,7 @@ body[data-layout="app"] #aux {
 
 .main-topbar,
 .aux-topbar {
+  position: relative; /* offset parent for the resize guards */
   display: flex;
   align-items: center;
   height: 40px;
@@ -39,6 +40,37 @@ body[data-layout="app"] #aux {
   flex-shrink: 0;
   background: var(--fm-bg);
   user-select: none;
+}
+
+/* Resize guards — transparent strips over the window-edge bands of a strip
+ * that is itself a drag region. tao gives an undecorated window its resize
+ * edges by hit-testing a 5px border, and lets the click fall through to the
+ * webview; without these the webview would start a *move* drag on the same
+ * click and win the race, so grabbing the top edge moved the window instead of
+ * resizing it. The guard is the topmost element over the band, and the bar's
+ * bare drag attribute only matches direct hits — so the click stops being a
+ * drag and tao's resize stands. See addResizeGuards() in topbar.ts. */
+.topbar-resize-guard {
+  position: absolute;
+  z-index: 1;
+}
+.topbar-resize-guard[data-edge="top"] {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+.topbar-resize-guard[data-edge="left"] {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+}
+.topbar-resize-guard[data-edge="right"] {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 6px;
 }
 .main-topbar {
   justify-content: flex-end; /* window controls sit at the right */
