@@ -3,7 +3,7 @@ import "./examples.css";
 import { mountChrome } from "../src/index.js";
 
 /* Manipulation archetype: same chrome as quiet, plus a 260px left aux pane
- * for tools / navigation / settings. Used by image-editor, color-editor. */
+ * for tools / navigation / settings. Used by image-editor, palette-editor. */
 
 const chrome = mountChrome({
   productName: "Manipulation",
