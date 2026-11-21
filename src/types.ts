@@ -17,6 +17,7 @@ export type ActionId =
   | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual"
   | "fullscreen" | "toggle-sidebar"
   // Go
+  | "back" | "forward"
   | "previous" | "next" | "first" | "last"
   // Help
   | "check-for-updates";

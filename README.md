@@ -89,6 +89,8 @@ The app's `index.html` is a one-script-tag stub:
 | `zoom-actual` | Original size | `Ctrl+1` | View |
 | `fullscreen` | Fullscreen | `F` | View |
 | `toggle-sidebar` | Toggle sidebar | `Ctrl+\` | View |
+| `back` | Back | `Alt+←` | Go |
+| `forward` | Forward | `Alt+→` | Go |
 | `previous` | Previous | `←` | Go |
 | `next` | Next | `→` | Go |
 | `first` | First | `Home` | Go |

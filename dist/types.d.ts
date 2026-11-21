@@ -2,7 +2,7 @@ export type MenuGroup = "file" | "edit" | "image" | "filter" | "view" | "go" | "
 /** Every shortcut + label krill apps share lives here. Each app picks
  *  which actions it supports by registering callbacks on `mountChrome`'s
  *  `actions` map; the package owns the label, shortcut, and menu group. */
-export type ActionId = "new" | "open" | "save" | "save-as" | "close-window" | "quit" | "undo" | "redo" | "cut" | "copy" | "paste" | "select-all" | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual" | "fullscreen" | "toggle-sidebar" | "previous" | "next" | "first" | "last" | "check-for-updates";
+export type ActionId = "new" | "open" | "save" | "save-as" | "close-window" | "quit" | "undo" | "redo" | "cut" | "copy" | "paste" | "select-all" | "zoom-in" | "zoom-out" | "zoom-fit" | "zoom-actual" | "fullscreen" | "toggle-sidebar" | "back" | "forward" | "previous" | "next" | "first" | "last" | "check-for-updates";
 export type ActionCallback = () => void | Promise<void>;
 /** A single item appended to a canonical menu group. */
 export type CustomMenuItem = {

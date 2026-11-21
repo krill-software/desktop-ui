@@ -112,3 +112,10 @@ body[data-layout="app"] #aux {
   background: rgba(221, 117, 150, 0.25);
   color: var(--fm-text);
 }
+/* Disabled (e.g. Back with no history) — after the hover rules so it wins. */
+.main-topbar-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+  color: var(--fm-muted);
+}

@@ -41,6 +41,8 @@ export const ACTION_REGISTRY: Record<ActionId, ActionDef> = {
   "fullscreen":   { label: "Fullscreen",    shortcut: "F",       group: "view" },
   "toggle-sidebar":{ label: "Toggle sidebar", shortcut: "Ctrl+\\", group: "view" },
   // Go
+  "back":         { label: "Back",         shortcut: "Alt+ArrowLeft",  group: "go" },
+  "forward":      { label: "Forward",      shortcut: "Alt+ArrowRight", group: "go" },
   "previous":     { label: "Previous",     shortcut: "ArrowLeft",  group: "go" },
   "next":         { label: "Next",         shortcut: "ArrowRight", group: "go" },
   "first":        { label: "First",        shortcut: "Home",       group: "go" },
@@ -60,7 +62,7 @@ export const MENU_LAYOUT: Record<MenuGroup, (ActionId | "sep" | "custom")[]> = {
   image:  ["custom"],
   filter: ["custom"],
   view:   ["zoom-in", "zoom-out", "sep", "zoom-fit", "zoom-actual", "sep", "fullscreen", "toggle-sidebar", "sep", "custom"],
-  go:     ["previous", "next", "sep", "first", "last", "sep", "custom"],
+  go:     ["back", "forward", "sep", "previous", "next", "sep", "first", "last", "sep", "custom"],
   help:   ["custom", "sep", "check-for-updates"],
 };
 
